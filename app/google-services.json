@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "224421989644",
+    "firebase_url": "https://magazinarticolesportive-d1a3f.firebaseio.com",
+    "project_id": "magazinarticolesportive-d1a3f",
+    "storage_bucket": "magazinarticolesportive-d1a3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224421989644:android:d7263a62d362005338cd29",
+        "android_client_info": {
+          "package_name": "com.example.magazinarticolesportive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224421989644-fp46hpal4i0hgds4d4jg3d3k6cqj80eu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.magazinarticolesportive",
+            "certificate_hash": "27f611dd1c89770c594dd58b37df688517db2515"
+          }
+        },
+        {
+          "client_id": "224421989644-qp2ru040n7t8g32bld3lsm84mt0u5ji6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-eNA58bD78Hv01waAoagGLU59VOhVYAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224421989644-qp2ru040n7t8g32bld3lsm84mt0u5ji6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
