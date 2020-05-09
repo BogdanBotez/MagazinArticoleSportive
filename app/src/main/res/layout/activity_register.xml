@@ -30,6 +30,7 @@
         android:hint="Name"
         android:inputType="textEmailAddress"
         android:textColorHint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold"
         />
@@ -47,6 +48,7 @@
         android:hint="Email address"
         android:inputType="textEmailAddress"
         android:textColorHint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold"
         />
@@ -64,6 +66,7 @@
         android:hint="password"
         android:inputType="textPassword"
         android:textColorHint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold"
         />

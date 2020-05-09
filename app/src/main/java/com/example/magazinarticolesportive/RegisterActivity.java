@@ -47,8 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void CreateAccount()
-    {
+    private void CreateAccount() {
         String name = InputName.getText().toString();
         String email = InputEmail.getText().toString();
         String password = InputPassword.getText().toString();
@@ -76,8 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void ValidateEmail(final String name,final String email, final String password)
-    {
+    private void ValidateEmail(final String name,final String email, final String password) {
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
