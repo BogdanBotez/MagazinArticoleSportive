@@ -13,30 +13,37 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.Model.Users;
+import com.example.magazinarticolesportive.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rey.material.widget.CheckBox;
+
+import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText InputEmail, InputPassword;
+    private EditText InputPhone, InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
 
     private String parentDbName = "Users";
+    private CheckBox chkBoxRememberMe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        LoginButton = (Button) findViewById(R.id.login_btn);
-        InputEmail = (EditText) findViewById(R.id.login_email);
-        InputPassword = (EditText) findViewById(R.id.login_password);
+        LoginButton = findViewById(R.id.login_btn);
+        InputPhone = findViewById(R.id.login_phone);
+        InputPassword = findViewById(R.id.login_password);
         loadingBar = new ProgressDialog(this);
-
+        chkBoxRememberMe = findViewById(R.id.remember_me_chkb);
+        Paper.init(this);
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,12 +55,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void LoginUser() {
-        String email = InputEmail.getText().toString();
+        String phone = InputPhone.getText().toString();
         String password = InputPassword.getText().toString();
 
-        if(TextUtils.isEmpty(email))
+        if(TextUtils.isEmpty(phone))
         {
-            Toast.makeText(this,"Please write your email...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please write your phone...", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(password))
         {
@@ -67,22 +74,29 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            AllowAccessAccount(email, password);
+            AllowAccessAccount(phone, password);
         }
     }
 
-    private void AllowAccessAccount(final String email, final String password) {
+    private void AllowAccessAccount(final String phone, final String password) {
+
+        if(chkBoxRememberMe.isChecked())
+        {
+            Paper.book().write(Prevalent.userPhone, phone);
+            Paper.book().write(Prevalent.userPassword, password);
+        }
+
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(parentDbName).child(email).exists())
+                if(dataSnapshot.child(parentDbName).child(phone).exists())
                 {
-                    Users userData = dataSnapshot.child(parentDbName).child(email).getValue(Users.class);
+                    Users userData = dataSnapshot.child(parentDbName).child(phone).getValue(Users.class);
 
-                    if(userData.getEmail().equals(email))
+                    if(userData.getPhone().equals(phone))
                     {
                         if(userData.getPassword().equals(password))
                         {
@@ -101,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(LoginActivity.this, "Account with the email: " + email + " do not exists",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Account with the phone: " + phone + " do not exists",Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }

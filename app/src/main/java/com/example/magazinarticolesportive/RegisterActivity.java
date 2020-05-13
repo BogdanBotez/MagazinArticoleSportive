@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity {
 
     private Button CreateAccountButton;
-    private EditText InputName, InputEmail, InputPassword;
+    private EditText InputName, InputPhone, InputPassword;
     private ProgressDialog loadingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         CreateAccountButton = (Button) findViewById(R.id.register_btn);
         InputName = (EditText) findViewById(R.id.register_name);
-        InputEmail = (EditText) findViewById(R.id.register_email);
+        InputPhone = (EditText) findViewById(R.id.register_phone);
         InputPassword = (EditText) findViewById(R.id.register_password);
         loadingBar = new ProgressDialog(this);
 
@@ -49,15 +49,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void CreateAccount() {
         String name = InputName.getText().toString();
-        String email = InputEmail.getText().toString();
+        String phone = InputPhone.getText().toString();
         String password = InputPassword.getText().toString();
 
         if(TextUtils.isEmpty(name)){
             Toast.makeText(this, "Please write your name...", Toast.LENGTH_SHORT).show();
         }
 
-        else if(TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Please write your email...", Toast.LENGTH_SHORT).show();
+        else if(TextUtils.isEmpty(phone)){
+            Toast.makeText(this, "Please write your phone...", Toast.LENGTH_SHORT).show();
         }
 
         else if(TextUtils.isEmpty(password)){
@@ -70,25 +70,25 @@ public class RegisterActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            ValidateEmail(name, email, password);
+            ValidatePhone(name, phone, password);
         }
 
     }
 
-    private void ValidateEmail(final String name,final String email, final String password) {
+    private void ValidatePhone(final String name,final String phone, final String password) {
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!(dataSnapshot.child("Users").child(email).exists()))
+                if(!(dataSnapshot.child("Users").child(phone).exists()))
                 {
                     HashMap<String, Object> userDataMap = new HashMap<>();
-                    userDataMap.put("email", email);
+                    userDataMap.put("phone", phone);
                     userDataMap.put("name", name);
                     userDataMap.put("password", password);
 
-                    RootRef.child("Users").child(email).updateChildren(userDataMap)
+                    RootRef.child("Users").child(phone).updateChildren(userDataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
@@ -112,9 +112,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(RegisterActivity.this, "This " + email + " already exists.", Toast.LENGTH_SHORT);
+                    Toast.makeText(RegisterActivity.this, "This " + phone + " already exists.", Toast.LENGTH_SHORT);
                     loadingBar.dismiss();
-                    Toast.makeText(RegisterActivity.this, "Try again using another email.", Toast.LENGTH_SHORT);
+                    Toast.makeText(RegisterActivity.this, "Try again using another phone.", Toast.LENGTH_SHORT);
 
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);

@@ -1,11 +1,11 @@
 package com.example.magazinarticolesportive.Model;
 
 public class Users {
-    private String name, email, password;
+    private String name, phone, password;
 
-    public Users(String name, String email, String password) {
+    public Users(String name, String phone, String password) {
         this.name = name;
-        this.email = email;
+        this.phone = phone;
         this.password = password;
     }
 
@@ -17,12 +17,12 @@ public class Users {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
