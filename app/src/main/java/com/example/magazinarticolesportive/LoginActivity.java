@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.Model.Users;
@@ -28,7 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText InputPhone, InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
+    private TextView AdminLink, UserLink;
 
+    //private String adminsDbName = "Admins";
+    //private String usersDbName = "Users";
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe;
 
@@ -41,8 +45,11 @@ public class LoginActivity extends AppCompatActivity {
         LoginButton = findViewById(R.id.login_btn);
         InputPhone = findViewById(R.id.login_phone);
         InputPassword = findViewById(R.id.login_password);
+        AdminLink = findViewById(R.id.admin_panel_link);
+        UserLink = findViewById(R.id.user_panel_link);
         loadingBar = new ProgressDialog(this);
         chkBoxRememberMe = findViewById(R.id.remember_me_chkb);
+        UserLink.setVisibility(View.INVISIBLE);
         Paper.init(this);
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +58,25 @@ public class LoginActivity extends AppCompatActivity {
                 LoginUser();
             }
         });
+        AdminLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginButton.setText("Login Admin");
+                AdminLink.setVisibility(View.INVISIBLE);
+                UserLink.setVisibility(View.VISIBLE);
+                parentDbName = "Admins";
+            }
+        });
 
+        UserLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginButton.setText("Login");
+                AdminLink.setVisibility(View.VISIBLE);
+                UserLink.setVisibility(View.INVISIBLE);
+                parentDbName = "Users";
+            }
+        });
     }
 
     private void LoginUser() {
@@ -100,11 +125,21 @@ public class LoginActivity extends AppCompatActivity {
                     {
                         if(userData.getPassword().equals(password))
                         {
-                            Toast.makeText(LoginActivity.this, "Logged in successfully!",Toast.LENGTH_SHORT).show();
+                            if(parentDbName.equals("Admins")){
+                                Toast.makeText(LoginActivity.this, "Admin logged in succesfully",Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
+
+                                Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                                startActivity(intent);
+                            }
+
+                        else if(parentDbName.equals("Users")){
+                            Toast.makeText(LoginActivity.this, "User logged in successfully!",Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
 
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(intent);
+                        }
                         }
                         else
                         {
@@ -123,7 +158,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+            }});
     }
 }
