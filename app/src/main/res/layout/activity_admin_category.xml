@@ -31,25 +31,25 @@
         android:layout_marginTop="45dp">
 
         <ImageView
-            android:id="@+id/type1"
+            android:id="@+id/tops_women"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/login_background"/>
 
         <ImageView
-            android:id="@+id/type2"
+            android:id="@+id/pants_women"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/main_logo"/>
 
         <ImageView
-            android:id="@+id/type3"
+            android:id="@+id/shoes_women"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
 
         <ImageView
-            android:id="@+id/type4"
+            android:id="@+id/accessories_women"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
@@ -68,25 +68,25 @@
         android:layout_marginTop="45dp">
 
         <ImageView
-            android:id="@+id/type5"
+            android:id="@+id/tops_men"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
 
         <ImageView
-            android:id="@+id/type6"
+            android:id="@+id/pants_men"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
 
         <ImageView
-            android:id="@+id/type7"
+            android:id="@+id/shoes_men"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
 
         <ImageView
-            android:id="@+id/type8"
+            android:id="@+id/accessories_men"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
@@ -105,13 +105,13 @@
         android:layout_marginTop="45dp">
 
         <ImageView
-            android:id="@+id/type9"
+            android:id="@+id/sport_equipment"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
 
         <ImageView
-            android:id="@+id/type10"
+            android:id="@+id/type_10"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:src="@drawable/buttons"/>
