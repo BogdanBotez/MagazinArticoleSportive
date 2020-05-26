@@ -4,15 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
@@ -31,10 +35,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class AdminAddProductActivity extends AppCompatActivity {
+public class AdminAddProductActivity extends AppCompatActivity
+implements AdapterView.OnItemSelectedListener{
 
     private String Category, Description, ProductName, saveCurrentDate, saveCurrentTime,
-            productRandomKey, downloadImageUrl, Size;
+            productRandomKey, downloadImageUrl, Size, Sport;
     private double Price;
     private int Pieces;
     private Button AddProductButton;
@@ -46,6 +51,8 @@ public class AdminAddProductActivity extends AppCompatActivity {
     private StorageReference ProductImagesRef;
     private DatabaseReference ProductRef;
     private ProgressDialog loadingBar;
+    private Spinner SportSpinner;
+    private String[] sports = {"Football", "Tennis", "Basketball", "Handball"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,12 @@ public class AdminAddProductActivity extends AppCompatActivity {
         InputProductSize = findViewById(R.id.product_size);
         InputProductImage = findViewById(R.id.input_product_image);
         InputProductPieces = findViewById(R.id.product_pieces);
+        SportSpinner = findViewById(R.id.sport_spinner);
+        SportSpinner.setOnItemSelectedListener(this);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sports);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        SportSpinner.setAdapter(arrayAdapter);
 
         InputProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +107,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GalleryPick && resultCode == RESULT_OK && data != null){
+        if(resultCode == RESULT_OK  && requestCode == GalleryPick && data != null){
             ImageUri = data.getData();
             InputProductImage.setImageURI(ImageUri);
         }
@@ -199,6 +212,7 @@ public class AdminAddProductActivity extends AppCompatActivity {
                 productMap.put("name", ProductName);
                 productMap.put("pieces", Pieces);
                 productMap.put("size", Size);
+                productMap.put("sport", Sport);
 
                 ProductRef.child(productRandomKey).updateChildren(productMap)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -219,5 +233,15 @@ public class AdminAddProductActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Sport = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
