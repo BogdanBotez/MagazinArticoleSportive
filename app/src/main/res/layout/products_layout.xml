@@ -10,6 +10,7 @@
     app:cardElevation="15dp"
     >
     <RelativeLayout
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
@@ -19,7 +20,7 @@
             android:text="Product Name"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
             android:textStyle="bold"
 
             />

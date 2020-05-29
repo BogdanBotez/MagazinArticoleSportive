@@ -18,6 +18,10 @@ public class Products {
         this.pieces = pieces;
     }
 
+    public Products(){
+
+    }
+
     public String getCategory() {
         return category;
     }

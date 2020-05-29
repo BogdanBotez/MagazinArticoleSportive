@@ -1,13 +1,7 @@
 package com.example.magazinarticolesportive.Model;
 
 public class Users {
-    private String name, phone, password;
-
-    public Users(String name, String phone, String password) {
-        this.name = name;
-        this.phone = phone;
-        this.password = password;
-    }
+    private String name, phone, password, image, address;
 
     public String getName() {
         return name;
@@ -33,8 +27,31 @@ public class Users {
         this.password = password;
     }
 
-    public Users()
-    {
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Users(String name, String phone, String password, String image, String address) {
+        this.name = name;
+        this.phone = phone;
+        this.password = password;
+        this.image = image;
+        this.address = address;
+    }
+
+    public Users(){
 
     }
 }
