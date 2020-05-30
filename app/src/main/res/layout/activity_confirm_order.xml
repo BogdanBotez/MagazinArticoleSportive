@@ -55,7 +55,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Address for shipping"
-        android:inputType="phone"
         android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
         />
@@ -69,7 +68,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="City for shipping"
-        android:inputType="phone"
         android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
         />

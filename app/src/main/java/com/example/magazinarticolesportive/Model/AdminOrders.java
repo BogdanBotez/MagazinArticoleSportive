@@ -1,0 +1,47 @@
+package com.example.magazinarticolesportive.Model;
+
+public class AdminOrders {
+    private String address, phone, name, totalPrice;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public AdminOrders() {
+    }
+
+    public AdminOrders(String address, String phone, String name, String totalPrice) {
+        this.address = address;
+        this.phone = phone;
+        this.name = name;
+        this.totalPrice = totalPrice;
+    }
+}
