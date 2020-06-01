@@ -1,10 +1,13 @@
 package com.example.magazinarticolesportive;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +21,14 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.IDN;
+
 public class AdminOrdersActivity extends AppCompatActivity {
 
     private RecyclerView ordersList;
     private DatabaseReference ordersRef;
+    //TODO scade quantity din baza de date products.
+    private DatabaseReference productsRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
         ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
         ordersList = findViewById(R.id.orders_list);
         ordersList.setLayoutManager(new LinearLayoutManager(this));
+        productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
     }
 
@@ -44,11 +52,48 @@ public class AdminOrdersActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder> adapter =
                 new FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, int position, @NonNull AdminOrders model) {
+                    protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, final int position, @NonNull final AdminOrders model) {
                         holder.name.setText("Name: " + model.getName());
                         holder.orderPhone.setText("Phone: " + model.getPhone());
                         holder.orderPrice.setText("Price: " + model.getTotalPrice());
                         holder.orderAddress.setText("Address: " + model.getAddress());
+
+                        holder.showOrdersBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String ID = getRef(position).getKey();
+
+                                Intent intent = new Intent(AdminOrdersActivity.this, AdminOrderDetailsActivity.class);
+                                intent.putExtra("id", ID);
+                                startActivity(intent);
+                            }
+                        });
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CharSequence options[] = new CharSequence[]{
+                                        "Accept",
+                                        "Deny"
+                                };
+                                AlertDialog.Builder builder = new AlertDialog.Builder(AdminOrdersActivity.this);
+                                builder.setTitle("Have you shipped this order?");
+
+                                builder.setItems(options, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if(which == 0){
+                                            String ID = getRef(position).getKey();
+                                            RemoveOrder(ID);
+
+                                        }else{
+                                            finish();
+                                        }
+                                    }
+                                });
+                                builder.show();
+                            }
+                        });
                     }
 
                     @NonNull
@@ -60,6 +105,10 @@ public class AdminOrdersActivity extends AppCompatActivity {
                 };
         ordersList.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    private void RemoveOrder(String id) {
+        ordersRef.child(id).removeValue();
     }
 
     public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder{

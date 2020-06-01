@@ -168,6 +168,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 Uri downloadUrl = task.getResult();
                                 myUrl = downloadUrl.toString();
 
+                                //ToDo pentru update cantitate.
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
                                 HashMap<String, Object> userMap = new HashMap<>();
                                 userMap.put("name", nameEditText.getText().toString());
