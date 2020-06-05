@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.magazinarticolesportive.Admin.AdminEditProductActivity;
 import com.example.magazinarticolesportive.Model.Products;
 import com.example.magazinarticolesportive.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -28,6 +29,7 @@ public class SearchProductsActivity extends AppCompatActivity {
     private EditText inputText;
     private RecyclerView searchList;
     private String search;
+    private String type="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class SearchProductsActivity extends AppCompatActivity {
         searchBtn = findViewById(R.id.search_product_btn);
         searchList = findViewById(R.id.search_list);
         searchList.setLayoutManager(new LinearLayoutManager(SearchProductsActivity.this));
+        type = getIntent().getStringExtra("type");
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +73,15 @@ public class SearchProductsActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SearchProductsActivity.this, ProductDetailsActivity.class);
-                        intent.putExtra("pid", model.getPid());
-                        startActivity(intent);
+                        if(type.equals("admin")) {
+                            Intent intent = new Intent(SearchProductsActivity.this, AdminEditProductActivity.class);
+                            intent.putExtra("pid", model.getPid());
+                            startActivity(intent);
+                        } else{
+                            Intent intent = new Intent(SearchProductsActivity.this, ProductDetailsActivity.class);
+                            intent.putExtra("pid", model.getPid());
+                            startActivity(intent);
+                        }
                     }
                 });
             }

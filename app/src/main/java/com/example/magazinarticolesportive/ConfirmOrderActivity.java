@@ -24,7 +24,9 @@ import java.util.HashMap;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
-    private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
+
+    //Todo cost transport
+    private EditText nameEditText, phoneEditText, addressEditText;
     private Button confirmOrderBtn;
     private String totalPrice = "";
 
@@ -38,7 +40,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         confirmOrderBtn = findViewById(R.id.confirm_order_btn);
         nameEditText = findViewById(R.id.name_confirm_order);
         phoneEditText = findViewById(R.id.phone_confirm_order);
-        cityEditText = findViewById(R.id.city_confirm_order);
         addressEditText = findViewById(R.id.address_confirm_order);
 
         confirmOrderBtn.setOnClickListener(new View.OnClickListener() {
@@ -57,11 +58,18 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(addressEditText.getText().toString())){
             Toast.makeText(this, "Please enter your address", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(cityEditText.getText().toString())){
-            Toast.makeText(this, "Please enter your city", Toast.LENGTH_SHORT).show();
         }else{
             ConfirmOrder();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        phoneEditText.setText(Prevalent.currentUser.getPhone());
+        nameEditText.setText(Prevalent.currentUser.getName());
+        addressEditText.setText(Prevalent.currentUser.getAddress());
     }
 
     private void ConfirmOrder() {
@@ -80,10 +88,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         ordersMap.put("name", nameEditText.getText().toString());
         ordersMap.put("phone", phoneEditText.getText().toString());
         ordersMap.put("address", addressEditText.getText().toString());
-        ordersMap.put("city", cityEditText.getText().toString());
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
-        ordersMap.put("state", "declined");
+        ordersMap.put("state", "pending");
 
         ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

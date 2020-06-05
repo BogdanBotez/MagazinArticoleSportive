@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive;
+package com.example.magazinarticolesportive.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -16,12 +16,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.magazinarticolesportive.Model.AdminOrders;
+import com.example.magazinarticolesportive.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.net.IDN;
 
 public class AdminOrdersActivity extends AppCompatActivity {
 
@@ -46,7 +45,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //setez un query cu ajut RecOptions
+        //setez un query cu ajut RecyclerOptions
         FirebaseRecyclerOptions<AdminOrders> options = new FirebaseRecyclerOptions.Builder<AdminOrders>()
                 .setQuery(ordersRef, AdminOrders.class).build();
         FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder> adapter =

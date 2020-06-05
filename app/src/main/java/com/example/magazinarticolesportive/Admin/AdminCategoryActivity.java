@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive;
+package com.example.magazinarticolesportive.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.magazinarticolesportive.HomeActivity;
+import com.example.magazinarticolesportive.MainActivity;
+import com.example.magazinarticolesportive.R;
+
 public class AdminCategoryActivity extends AppCompatActivity {
 
     private ImageView womenTops, womenPants, womenShoes, womenAccessories,
             menTops, menPants, menShoes, menAccessories, sportEquipment;
 
-    private Button logoutBtn, checkOrdersBtn;
+    private Button logoutBtn, checkOrdersBtn, editProductBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
         logoutBtn = findViewById(R.id.admin_logout_btn);
         checkOrdersBtn = findViewById(R.id.check_orders_btn);
+        editProductBtn = findViewById(R.id.edit_product_btn);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +45,15 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
                 startActivity(intent);
 
+            }
+        });
+
+        editProductBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminCategoryActivity.this, HomeActivity.class);
+                intent.putExtra("admin", "admin");
+                startActivity(intent);
             }
         });
 

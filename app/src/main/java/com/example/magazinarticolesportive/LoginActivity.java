@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.magazinarticolesportive.Admin.AdminCategoryActivity;
 import com.example.magazinarticolesportive.Model.Users;
 import com.example.magazinarticolesportive.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText InputPhone, InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
-    private TextView AdminLink, UserLink;
+    private TextView AdminLink, UserLink, forgotPasswordLink;
 
     //private String adminsDbName = "Admins";
     //private String usersDbName = "Users";
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         InputPassword = findViewById(R.id.login_password);
         AdminLink = findViewById(R.id.admin_panel_link);
         UserLink = findViewById(R.id.user_panel_link);
+        forgotPasswordLink = findViewById(R.id.forgot_password_link);
         loadingBar = new ProgressDialog(this);
         chkBoxRememberMe = findViewById(R.id.remember_me_chkb);
         UserLink.setVisibility(View.INVISIBLE);
@@ -75,6 +77,15 @@ public class LoginActivity extends AppCompatActivity {
                 AdminLink.setVisibility(View.VISIBLE);
                 UserLink.setVisibility(View.INVISIBLE);
                 parentDbName = "Users";
+            }
+        });
+
+        forgotPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                intent.putExtra("check", "login");
+                startActivity(intent);
             }
         });
     }

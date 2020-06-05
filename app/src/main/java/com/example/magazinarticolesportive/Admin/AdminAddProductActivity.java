@@ -1,10 +1,9 @@
-package com.example.magazinarticolesportive;
+package com.example.magazinarticolesportive.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,8 +18,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.magazinarticolesportive.R;
 import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,10 +40,10 @@ implements AdapterView.OnItemSelectedListener{
     private String Category, Description, ProductName, saveCurrentDate, saveCurrentTime,
             productRandomKey, downloadImageUrl, Size, Sport;
     private double Price;
-    private int Pieces;
+    private int quantity;
     private Button AddProductButton;
     private EditText InputProductName, InputProductDescription, InputProductPrice,
-        InputProductSize, InputProductPieces;
+        InputProductSize, InputProductQuantity;
     private ImageView InputProductImage;
     private static final int GalleryPick = 1;
     private Uri ImageUri;
@@ -71,7 +70,7 @@ implements AdapterView.OnItemSelectedListener{
         InputProductPrice = findViewById(R.id.product_price);
         InputProductSize = findViewById(R.id.product_size);
         InputProductImage = findViewById(R.id.input_product_image);
-        InputProductPieces = findViewById(R.id.product_pieces);
+        InputProductQuantity = findViewById(R.id.product_quantity);
         SportSpinner = findViewById(R.id.sport_spinner);
         SportSpinner.setOnItemSelectedListener(this);
 
@@ -118,7 +117,7 @@ implements AdapterView.OnItemSelectedListener{
         Description = InputProductDescription.getText().toString();
         Price = Double.parseDouble(InputProductPrice.getText().toString());
         ProductName = InputProductName.getText().toString();
-        Pieces = Integer.parseInt(InputProductPieces.getText().toString());
+        quantity = Integer.parseInt(InputProductQuantity.getText().toString());
         Size = InputProductSize.getText().toString();
 
         if(ImageUri == null){
@@ -133,8 +132,8 @@ implements AdapterView.OnItemSelectedListener{
         else if(TextUtils.isEmpty(ProductName)){
             Toast.makeText(this, "Please enter a name for the product", Toast.LENGTH_SHORT).show();
         }
-        else if(Pieces <= 0){
-            Toast.makeText(this, "Please enter the number of pieces", Toast.LENGTH_SHORT).show();
+        else if(quantity <= 0){
+            Toast.makeText(this, "Please enter the number of quantity", Toast.LENGTH_SHORT).show();
         }
         else{
             StoreProductInformation();
@@ -210,7 +209,7 @@ implements AdapterView.OnItemSelectedListener{
                 productMap.put("category", Category);
                 productMap.put("price", Price);
                 productMap.put("name", ProductName);
-                productMap.put("pieces", Pieces);
+                productMap.put("quantity", quantity);
                 productMap.put("size", Size);
                 productMap.put("sport", Sport);
 
