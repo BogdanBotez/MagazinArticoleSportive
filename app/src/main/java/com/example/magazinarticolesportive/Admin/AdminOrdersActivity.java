@@ -38,7 +38,6 @@ public class AdminOrdersActivity extends AppCompatActivity {
         ordersList = findViewById(R.id.orders_list);
         ordersList.setLayoutManager(new LinearLayoutManager(this));
         productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
-
     }
 
     @Override
@@ -56,6 +55,8 @@ public class AdminOrdersActivity extends AppCompatActivity {
                         holder.orderPhone.setText("Phone: " + model.getPhone());
                         holder.orderPrice.setText("Price: " + model.getTotalPrice());
                         holder.orderAddress.setText("Address: " + model.getAddress());
+                        holder.date.setText("Date: " + model.getDate());
+                        holder.time.setText("Time: " + model.getTime());
 
                         holder.showOrdersBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -85,6 +86,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
                                             String ID = getRef(position).getKey();
                                             RemoveOrder(ID);
 
+
                                         }else{
                                             finish();
                                         }
@@ -111,7 +113,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
     }
 
     public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder{
-        public TextView orderPhone, orderPrice, orderAddress, name;
+        public TextView orderPhone, orderPrice, orderAddress, name, date, time;
         public Button showOrdersBtn;
 
         public AdminOrdersViewHolder(@NonNull View itemView) {
@@ -122,6 +124,9 @@ public class AdminOrdersActivity extends AppCompatActivity {
             orderAddress = itemView.findViewById(R.id.address_order);
             orderPhone = itemView.findViewById(R.id.phone_number_order);
             showOrdersBtn = itemView.findViewById(R.id.show_products_order_btn);
+            time = itemView.findViewById(R.id.time_order);
+            date = itemView.findViewById(R.id.date_order);
+
         }
     }
 }

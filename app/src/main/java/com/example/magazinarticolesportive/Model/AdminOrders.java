@@ -1,10 +1,35 @@
 package com.example.magazinarticolesportive.Model;
 
 public class AdminOrders {
-    private String address, phone, name, totalPrice;
+    private String address, phone, name, totalPrice, date, time;
 
     public String getAddress() {
         return address;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public AdminOrders(String address, String phone, String name, String totalPrice, String date, String time) {
+        this.address = address;
+        this.phone = phone;
+        this.name = name;
+        this.totalPrice = totalPrice;
+        this.date = date;
+        this.time = time;
     }
 
     public void setAddress(String address) {
@@ -36,12 +61,5 @@ public class AdminOrders {
     }
 
     public AdminOrders() {
-    }
-
-    public AdminOrders(String address, String phone, String name, String totalPrice) {
-        this.address = address;
-        this.phone = phone;
-        this.name = name;
-        this.totalPrice = totalPrice;
     }
 }

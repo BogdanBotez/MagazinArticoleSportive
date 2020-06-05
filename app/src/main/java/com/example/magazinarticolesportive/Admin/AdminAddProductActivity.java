@@ -29,16 +29,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
 public class AdminAddProductActivity extends AppCompatActivity
-implements AdapterView.OnItemSelectedListener{
+{
 
     private String Category, Description, ProductName, saveCurrentDate, saveCurrentTime,
-            productRandomKey, downloadImageUrl, Size, Sport;
+            productRandomKey, downloadImageUrl, Size, sport, gender;
     private double Price;
     private int quantity;
     private Button AddProductButton;
@@ -50,8 +51,9 @@ implements AdapterView.OnItemSelectedListener{
     private StorageReference ProductImagesRef;
     private DatabaseReference ProductRef;
     private ProgressDialog loadingBar;
-    private Spinner SportSpinner;
-    private String[] sports = {"Football", "Tennis", "Basketball", "Handball"};
+    private MaterialSpinner sportSpinner;
+    private MaterialSpinner genderSpinner;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,11 @@ implements AdapterView.OnItemSelectedListener{
         InputProductSize = findViewById(R.id.product_size);
         InputProductImage = findViewById(R.id.input_product_image);
         InputProductQuantity = findViewById(R.id.product_quantity);
-        SportSpinner = findViewById(R.id.sport_spinner);
-        SportSpinner.setOnItemSelectedListener(this);
+        sportSpinner = findViewById(R.id.sport_spinner);
+        genderSpinner = findViewById(R.id.gender_spinner);
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sports);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        SportSpinner.setAdapter(arrayAdapter);
+        genderSpinner.setItems("Male", "Female", "Unisex");
+        sportSpinner.setItems("Football", "Hockey", "Basketball", "Tennis", "Handball");
 
         InputProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,9 +92,23 @@ implements AdapterView.OnItemSelectedListener{
                 ValidateProductData();
             }
         });
-    }
 
+        sportSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                sport = item.toString();
+            }
+        });
+
+        genderSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                gender = item.toString();
+            }
+        });
+    }
     //select imag din galerie
+
     private void OpenGallery() {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -133,7 +148,7 @@ implements AdapterView.OnItemSelectedListener{
             Toast.makeText(this, "Please enter a name for the product", Toast.LENGTH_SHORT).show();
         }
         else if(quantity <= 0){
-            Toast.makeText(this, "Please enter the number of quantity", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter the quantity", Toast.LENGTH_SHORT).show();
         }
         else{
             StoreProductInformation();
@@ -149,7 +164,7 @@ implements AdapterView.OnItemSelectedListener{
 
         Calendar calendar = Calendar.getInstance();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd MM, yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd MM yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
@@ -211,7 +226,8 @@ implements AdapterView.OnItemSelectedListener{
                 productMap.put("name", ProductName);
                 productMap.put("quantity", quantity);
                 productMap.put("size", Size);
-                productMap.put("sport", Sport);
+                productMap.put("sport", sport);
+                productMap.put("gender", gender);
 
                 ProductRef.child(productRandomKey).updateChildren(productMap)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -232,15 +248,5 @@ implements AdapterView.OnItemSelectedListener{
                         });
             }
         });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Sport = parent.getItemAtPosition(position).toString();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

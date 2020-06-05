@@ -14,8 +14,7 @@ import com.example.magazinarticolesportive.R;
 
 public class AdminCategoryActivity extends AppCompatActivity {
 
-    private ImageView womenTops, womenPants, womenShoes, womenAccessories,
-            menTops, menPants, menShoes, menAccessories, sportEquipment;
+    private ImageView tops, pants, shoes, sportEquipment;
 
     private Button logoutBtn, checkOrdersBtn, editProductBtn;
 
@@ -57,94 +56,45 @@ public class AdminCategoryActivity extends AppCompatActivity {
             }
         });
 
-        womenTops = findViewById(R.id.tops_women);
-        womenPants = findViewById(R.id.pants_women);
-        womenShoes = findViewById(R.id.shoes_women);
-        womenAccessories = findViewById(R.id.accessories_women);
-        menTops = findViewById(R.id.tops_men);
-        menPants = findViewById(R.id.pants_men);
-        menShoes = findViewById(R.id.shoes_men);
-        menAccessories = findViewById(R.id.accessories_men);
+        tops = findViewById(R.id.tops);
+        pants = findViewById(R.id.pants);
+        shoes = findViewById(R.id.shoes);
         sportEquipment = findViewById(R.id.sport_equipment);
 
 
-        womenTops.setOnClickListener(new View.OnClickListener() {
+        tops.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "womenTops");
+                intent.putExtra("category", "tops");
                 startActivity(intent);
             }
         });
 
-        womenPants.setOnClickListener(new View.OnClickListener() {
+        pants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "womenPants");
+                intent.putExtra("category", "pants");
                 startActivity(intent);
             }
         });
 
-        womenAccessories.setOnClickListener(new View.OnClickListener() {
+        shoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "womenAccessories");
+                intent.putExtra("category", "shoes");
                 startActivity(intent);
             }
         });
 
-        womenShoes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "womenShoes");
-                startActivity(intent);
-            }
-        });
-
-        menTops.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "menTops");
-                startActivity(intent);
-            }
-        });
-
-        menPants.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "menPants");
-                startActivity(intent);
-            }
-        });
-
-        menAccessories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "menAccessories");
-                startActivity(intent);
-            }
-        });
-
-        menShoes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "menShoes");
-                startActivity(intent);
-            }
-        });
 
         sportEquipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "sportEquipment");
+                intent.putExtra("category", "equipment");
                 startActivity(intent);
             }
         });

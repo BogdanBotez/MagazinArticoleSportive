@@ -19,7 +19,6 @@
         android:textAlignment="center"
         android:textSize="26sp"
         android:textStyle="bold"
-
         />
 
     <LinearLayout
@@ -33,28 +32,21 @@
         android:layout_marginTop="45dp">
 
         <ImageView
-            android:id="@+id/tops_women"
-            android:layout_width="wrap_content"
+            android:id="@+id/tops"
+            android:layout_width="200dp"
+            android:background="@color/background"
             android:layout_height="80dp"
-            android:src="@drawable/login_background"/>
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/tops"/>
 
         <ImageView
-            android:id="@+id/pants_women"
+            android:id="@+id/shoes"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/background"
             android:layout_height="80dp"
-            android:src="@drawable/main_logo"/>
-
-        <ImageView
-            android:id="@+id/shoes_women"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-        <ImageView
-            android:id="@+id/accessories_women"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
+            android:src="@drawable/shoes"/>
 
     </LinearLayout>
 
@@ -70,65 +62,22 @@
         android:layout_marginTop="45dp">
 
         <ImageView
-            android:id="@+id/tops_men"
-            android:layout_width="wrap_content"
+            android:id="@+id/pants"
+            android:layout_width="200dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/background"
             android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-        <ImageView
-            android:id="@+id/pants_men"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-        <ImageView
-            android:id="@+id/shoes_men"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-        <ImageView
-            android:id="@+id/accessories_men"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/linear_category_layout_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linear_category_layout_2"
-        android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_marginTop="45dp">
+            android:src="@drawable/pants"
+            />
 
         <ImageView
             android:id="@+id/sport_equipment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/background"
             android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-        <ImageView
-            android:id="@+id/type_10"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-        <ImageView
-            android:id="@+id/type11"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
-
-        <ImageView
-            android:id="@+id/type12"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/blue_button"/>
+            android:src="@drawable/equipment"/>
 
     </LinearLayout>
 
