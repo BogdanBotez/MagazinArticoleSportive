@@ -73,18 +73,17 @@ public class CartActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
-                .setQuery(cartListRef.child("User View")
-                        .child(Prevalent.currentUser.getPhone())
-                        .child("Products"), Cart.class).build();
+                        .setQuery(cartListRef.child("User View")
+                                .child(Prevalent.currentUser.getPhone())
+                                .child("Products"), Cart.class).build();
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model) {
                 holder.txtQuantity.setText("Quantity =" + model.getQuantity());
                 holder.txtName.setText(model.getName());
                 holder.txtPrice.setText("Price = " + model.getPrice());
-
                 double productPrice = Double.valueOf(model.getPrice()) * Double.valueOf(model.getQuantity());
-                holder.txtTotalProductPrice.setText("Total price = " + productPrice);
+                holder.txtTotalProductPrice.setText("Total price = " + productPrice + " RON");
                 totalPrice += productPrice;
                 txtTotalPrice.setText("Total price = " + totalPrice);
 
@@ -102,19 +101,26 @@ public class CartActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int option) {
                                 //Edit
-                                if(option == 0){
+                                if (option == 0) {
                                     Intent intent = new Intent(CartActivity.this, ProductDetailsActivity.class);
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
-                                }else if(option == 1){
+                                } else if (option == 1) {
                                     cartListRef.child("User View").child(Prevalent.currentUser.getPhone()).child("Products")
                                             .child(model.getPid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                Toast.makeText(CartActivity.this, "The product has been removed from the cart", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(CartActivity.this, HomeActivity.class);
-                                                startActivity(intent);
+                                            if (task.isSuccessful()) {
+                                                cartListRef.child("Admin View").child(Prevalent.currentUser.getPhone()).child("Products")
+                                                        .child(model.getPid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        Toast.makeText(CartActivity.this, "The product has been removed from the cart", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(CartActivity.this, HomeActivity.class);
+                                                        startActivity(intent);
+                                                    }
+                                                });
+
                                             }
                                         }
                                     });
@@ -139,21 +145,21 @@ public class CartActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    private void CheckOrderState(){
+    private void CheckOrderState() {
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone());
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     String shippingState = dataSnapshot.child("state").getValue().toString();
                     String name = dataSnapshot.child("name").getValue().toString();
-                    if(shippingState.equals("approved")){
+                    if (shippingState.equals("approved")) {
                         txtTotalPrice.setText(name + ", your order it's approved");
                         recyclerView.setVisibility(View.GONE);
                         txtWaitMessage.setVisibility(View.VISIBLE);
                         nextProcessBtn.setVisibility(View.GONE);
                         Toast.makeText(CartActivity.this, "You can purchase more after u receive your last order", Toast.LENGTH_SHORT).show();
-                    }else if(shippingState.equals("not shipping")){
+                    } else if (shippingState.equals("not shipping")) {
                         txtTotalPrice.setText(name + ", your order it's not approved yet");
                         recyclerView.setVisibility(View.GONE);
                         txtWaitMessage.setVisibility(View.VISIBLE);

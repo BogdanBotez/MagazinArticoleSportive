@@ -1,11 +1,19 @@
 package com.example.magazinarticolesportive.Model;
 
 public class Products {
-    private String category, date, description, image, name, pid, size, time, GENDER;
+    private String category, date, description, image, name, pid, size, time, gender, sport;
     private double price;
-    private int pieces;
+    private int quantity;
 
-    public Products(String category, String date, String description, String image, String name, String pid, String size, String time, double price, int pieces) {
+    public String getSport() {
+        return sport;
+    }
+
+    public void setSport(String sport) {
+        this.sport = sport;
+    }
+
+    public Products(String category, String date, String description, String image, String name, String pid, String size, String time, String gender, String sport, double price, int quantity) {
         this.category = category;
         this.date = date;
         this.description = description;
@@ -14,8 +22,10 @@ public class Products {
         this.pid = pid;
         this.size = size;
         this.time = time;
+        this.gender = gender;
+        this.sport = sport;
         this.price = price;
-        this.pieces = pieces;
+        this.quantity = quantity;
     }
 
     public Products(){
@@ -86,12 +96,12 @@ public class Products {
         this.time = time;
     }
 
-    public String getGENDER() {
-        return GENDER;
+    public String getGender() {
+        return gender;
     }
 
-    public void setGENDER(String GENDER) {
-        this.GENDER = GENDER;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public double getPrice() {
@@ -102,11 +112,11 @@ public class Products {
         this.price = price;
     }
 
-    public int getPieces() {
-        return pieces;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setPieces(int pieces) {
-        this.pieces = pieces;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -32,7 +32,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private Button addProductToCartBtn;
     private ImageView productImage;
     private ElegantNumberButton quantityBtn;
-    private TextView productPrice, productDescription, productName, productSport;
+    private TextView productPrice, productDescription, productName, productSport, productSize, productCategory;
     private String productID = "";
     private String state = "";
 
@@ -51,6 +51,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDescription = findViewById(R.id.product_description_details);
         productPrice = findViewById(R.id.product_price_details);
         productSport = findViewById(R.id.product_sport_details);
+        productSize = findViewById(R.id.product_size_details);
+        productCategory = findViewById(R.id.product_category_details);
         //ToDo the rest
 
         getProductDetails(productID);
@@ -58,12 +60,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         addProductToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(state.equals("Order placed") || state.equals("Order shipped")){
-                    Toast.makeText(ProductDetailsActivity.this, "You will have the option to add products to the cart once you will have the last order finished", Toast.LENGTH_LONG).show();
-                }else{
-
+//                if(state.equals("Order placed") || state.equals("Order shipped")){
+//                    Toast.makeText(ProductDetailsActivity.this, "You will have the option to add products to the cart once you will have the last order finished", Toast.LENGTH_LONG).show();
+//                }else{
                     addToCartList();
-                }
+
             }
         });
     }
@@ -95,7 +96,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("quantity", quantityBtn.getNumber());
         cartMap.put("discount", "");
 
-        //adaugarea in lista a produselor , TODO vezi daca e ok ordinea
+        //adaugarea in lista a produselor
         cartListRef.child("User View").child(Prevalent.currentUser.getPhone()).child("Products")
                 .child(productID).updateChildren(cartMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -109,7 +110,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(ProductDetailsActivity.this, "Product added to your cart.", Toast.LENGTH_SHORT).show();
-
                                                 Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class);
                                                 startActivity(intent);
                                             }
@@ -122,7 +122,27 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void getProductDetails(String productID) {
+    private void updateQuantity(final String qtyOrdered) {
+        final DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productID);
+        productRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Products prod = dataSnapshot.getValue(Products.class);
+
+                int newQuantity = prod.getQuantity() - Integer.parseInt(qtyOrdered);
+                HashMap<String, Object> updatedProduct = new HashMap<>();
+                updatedProduct.put("quantity", newQuantity);
+                productRef.updateChildren(updatedProduct);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getProductDetails(final String productID) {
         DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
         productRef.child(productID).addValueEventListener(new ValueEventListener() {
@@ -131,13 +151,26 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 if(dataSnapshot.exists()){
                     Products products = dataSnapshot.getValue(Products.class);
 
-                    productName.setText(products.getName());
-                    productPrice.setText(String.valueOf(products.getPrice()));
-                    productDescription.setText(products.getDescription());
+                    if(products.getQuantity() <= 10 )
+                    {
+                        if(products.getQuantity() >= 0) {
+                            quantityBtn.setRange(1, products.getQuantity());
+                            //TODO testeaza daca functioneaza cand sunt 0 buc
+                        }else {
+                            Toast.makeText(ProductDetailsActivity.this, "The product is sold out", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+
                     Picasso.get().load(products.getImage()).into(productImage);
-                    //TODO Add more details
+                    productName.setText(products.getName());
+                    productDescription.setText(products.getDescription());
+                    productPrice.setText(String.valueOf(products.getPrice()));
+                    productSport.setText(products.getSport());
+                    productCategory.setText(products.getCategory());
+                    productSize.setText(products.getSize());
+                    }
                 }
-            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -155,7 +188,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     String shippingState = dataSnapshot.child("state").getValue().toString();
                     if(shippingState.equals("shipped")){
-                        state = "Order shipped";
+                        state = "Order completed";
                     }else if(shippingState.equals("not shipping")){
 
                         state = "Order placed";
