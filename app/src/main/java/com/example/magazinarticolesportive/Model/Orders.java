@@ -1,6 +1,6 @@
 package com.example.magazinarticolesportive.Model;
 
-public class AdminOrders {
+public class Orders {
     private String address, phone, name, totalPrice, date, time;
 
     public String getAddress() {
@@ -23,7 +23,7 @@ public class AdminOrders {
         this.time = time;
     }
 
-    public AdminOrders(String address, String phone, String name, String totalPrice, String date, String time) {
+    public Orders(String address, String phone, String name, String totalPrice, String date, String time) {
         this.address = address;
         this.phone = phone;
         this.name = name;
@@ -60,6 +60,6 @@ public class AdminOrders {
         this.totalPrice = totalPrice;
     }
 
-    public AdminOrders() {
+    public Orders() {
     }
 }

@@ -1,6 +1,7 @@
 package com.example.magazinarticolesportive;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,8 +16,12 @@ import com.example.magazinarticolesportive.Prevalent.Prevalent;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseError;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,6 +34,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private EditText nameEditText, phoneEditText, addressEditText;
     private Button confirmOrderBtn;
     private String totalPrice = "";
+    private String orderID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +58,13 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     }
 
     private void Check() {
-        if(TextUtils.isEmpty(nameEditText.getText().toString())){
+        if (TextUtils.isEmpty(nameEditText.getText().toString())) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(phoneEditText.getText().toString())){
+        } else if (TextUtils.isEmpty(phoneEditText.getText().toString())) {
             Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(addressEditText.getText().toString())){
+        } else if (TextUtils.isEmpty(addressEditText.getText().toString())) {
             Toast.makeText(this, "Please enter your address", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             ConfirmOrder();
         }
     }
@@ -82,7 +88,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:MM:SS");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
-        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone());
+        String orderID = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).push().getKey();
+
+        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).child(orderID);
         HashMap<String, Object> ordersMap = new HashMap<>();
         ordersMap.put("totalPrice", totalPrice);
         ordersMap.put("name", nameEditText.getText().toString());
@@ -92,27 +100,64 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         ordersMap.put("time", saveCurrentTime);
         ordersMap.put("state", "pending");
 
+
         ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    FirebaseDatabase.getInstance().getReference().child("Cart List")
-                            .child("User View").child(Prevalent.currentUser.getPhone())
+                if (task.isSuccessful()) {
+                    moveProductsToOrder(
+                            FirebaseDatabase.getInstance().getReference().child("Cart List")
+                                    .child("User View")
+                                    .child(Prevalent.currentUser.getPhone()).child("Products"),
+                            ordersRef.child("Products")
+                    );
+
+                  /*  FirebaseDatabase.getInstance().getReference()
+                            .child("Cart List")
+                            .child("User View")
+                            .child(Prevalent.currentUser.getPhone())
                             .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(ConfirmOrderActivity.this, "The order has been confirmed", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ConfirmOrderActivity.this, HomeActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
-                            }
+                            if (task.isSuccessful()) {*/
+
+                    Toast.makeText(ConfirmOrderActivity.this, "You have confirmed the order!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ConfirmOrderActivity.this, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+      /*                      }
+
                         }
-                    });
+                    });*/
                 }
             }
         });
 
+    }
+
+    private void moveProductsToOrder(final DatabaseReference fromPath, final DatabaseReference toPath) {
+        fromPath.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                toPath.setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                        if (databaseError != null) {
+
+                        } else {
+                            fromPath.removeValue();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
     }
 }

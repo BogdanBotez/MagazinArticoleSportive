@@ -164,13 +164,13 @@ public class AdminAddProductActivity extends AppCompatActivity
 
         Calendar calendar = Calendar.getInstance();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd MM yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/mm/yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
-        productRandomKey = saveCurrentDate + saveCurrentTime;
+        productRandomKey = saveCurrentDate + ", " + saveCurrentTime;
 
 
         final StorageReference filePath = ProductImagesRef.child((ImageUri.getLastPathSegment()) + productRandomKey);

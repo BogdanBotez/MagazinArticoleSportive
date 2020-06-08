@@ -18,8 +18,6 @@ import com.example.magazinarticolesportive.Prevalent.Prevalent;
 import com.example.magazinarticolesportive.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
@@ -99,10 +97,10 @@ public class HomeActivity extends AppCompatActivity
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
-        if (!type.equals("admin")) {
+ /*       if (!type.equals("admin")) {
             userNameTextView.setText(Prevalent.currentUser.getName());
             Picasso.get().load(Prevalent.currentUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
-        }
+        }*/
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -266,6 +264,11 @@ public class HomeActivity extends AppCompatActivity
                 Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
                 startActivity(intent);
             }
+        } else if (id == R.id.nav_orders) {
+            if (!type.equals("admin")) {
+                Intent intent = new Intent(HomeActivity.this, UserOrdersActivity.class);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_logout) {
             Paper.book().destroy();
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
@@ -288,7 +291,6 @@ public class HomeActivity extends AppCompatActivity
         categorySpinner.setItems("", "all", "tops", "pants", "shoes", "equipment");
         categorySpinner.setTextColor(Color.BLACK);
         categorySpinner.setArrowColor(Color.BLACK);
-        categorySpinner.setDropdownMaxHeight(500);
 
         categorySpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
@@ -316,4 +318,3 @@ public class HomeActivity extends AppCompatActivity
         builder.show();
     }
 }
-

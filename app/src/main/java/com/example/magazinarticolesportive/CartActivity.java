@@ -1,3 +1,4 @@
+//TODO chestia cu comenzile multiple
 package com.example.magazinarticolesportive;
 
 import androidx.annotation.NonNull;
@@ -111,18 +112,12 @@ public class CartActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                cartListRef.child("Admin View").child(Prevalent.currentUser.getPhone()).child("Products")
-                                                        .child(model.getPid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
                                                         Toast.makeText(CartActivity.this, "The product has been removed from the cart", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(CartActivity.this, HomeActivity.class);
                                                         startActivity(intent);
                                                     }
-                                                });
 
                                             }
-                                        }
                                     });
                                 }
                             }
@@ -146,20 +141,21 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void CheckOrderState() {
-        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone());
+        String orderID = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).getKey();
+        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).child(orderID);
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String shippingState = dataSnapshot.child("state").getValue().toString();
+                    String orderState = dataSnapshot.child("state").getValue().toString();
                     String name = dataSnapshot.child("name").getValue().toString();
-                    if (shippingState.equals("approved")) {
+                    if (orderState.equals("approved")) {
                         txtTotalPrice.setText(name + ", your order it's approved");
                         recyclerView.setVisibility(View.GONE);
                         txtWaitMessage.setVisibility(View.VISIBLE);
                         nextProcessBtn.setVisibility(View.GONE);
                         Toast.makeText(CartActivity.this, "You can purchase more after u receive your last order", Toast.LENGTH_SHORT).show();
-                    } else if (shippingState.equals("not shipping")) {
+                    } else if (orderState.equals("pending")) {
                         txtTotalPrice.setText(name + ", your order it's not approved yet");
                         recyclerView.setVisibility(View.GONE);
                         txtWaitMessage.setVisibility(View.VISIBLE);

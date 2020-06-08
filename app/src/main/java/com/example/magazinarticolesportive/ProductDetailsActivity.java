@@ -35,6 +35,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private TextView productPrice, productDescription, productName, productSport, productSize, productCategory;
     private String productID = "";
     private String state = "";
+    private String orderID = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).getKey();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +61,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         addProductToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(state.equals("Order placed") || state.equals("Order shipped")){
-//                    Toast.makeText(ProductDetailsActivity.this, "You will have the option to add products to the cart once you will have the last order finished", Toast.LENGTH_LONG).show();
-//                }else{
                     addToCartList();
 
             }
@@ -180,7 +178,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void CheckOrderState(){
-        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone());
+        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).child(orderID);
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

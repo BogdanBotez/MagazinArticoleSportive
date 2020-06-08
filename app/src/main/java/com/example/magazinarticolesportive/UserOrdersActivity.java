@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.Admin;
+package com.example.magazinarticolesportive;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -16,14 +16,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.magazinarticolesportive.Model.Orders;
-import com.example.magazinarticolesportive.OrderDetailsActivity;
-import com.example.magazinarticolesportive.R;
+import com.example.magazinarticolesportive.Prevalent.Prevalent;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AdminOrdersActivity extends AppCompatActivity {
+public class UserOrdersActivity extends AppCompatActivity {
+
 
     private RecyclerView ordersList;
     private DatabaseReference ordersRef;
@@ -33,11 +33,9 @@ public class AdminOrdersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_orders);
+        setContentView(R.layout.activity_user_orders);
 
-        String ordersID = FirebaseDatabase.getInstance().getReference().child("Orders").push().getKey();
-
-        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(ordersID);
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone());
         ordersList = findViewById(R.id.orders_list);
         ordersList.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -49,10 +47,10 @@ public class AdminOrdersActivity extends AppCompatActivity {
         //setez un query cu ajut RecyclerOptions
         FirebaseRecyclerOptions<Orders> options = new FirebaseRecyclerOptions.Builder<Orders>()
                 .setQuery(ordersRef, Orders.class).build();
-        FirebaseRecyclerAdapter<Orders, AdminOrdersViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Orders, AdminOrdersViewHolder>(options) {
+        FirebaseRecyclerAdapter<Orders, OrdersViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Orders, OrdersViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, final int position, @NonNull final Orders model) {
+                    protected void onBindViewHolder(@NonNull OrdersViewHolder holder, final int position, @NonNull final Orders model) {
                         holder.name.setText("Name: " + model.getName());
                         holder.orderPhone.setText("Phone: " + model.getPhone());
                         holder.orderPrice.setText("Price: " + model.getTotalPrice());
@@ -65,7 +63,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 String ID = getRef(position).getKey();
 
-                                Intent intent = new Intent(AdminOrdersActivity.this, OrderDetailsActivity.class);
+                                Intent intent = new Intent(UserOrdersActivity.this, OrderDetailsActivity.class);
                                 intent.putExtra("id", ID);
                                 startActivity(intent);
                             }
@@ -75,10 +73,10 @@ public class AdminOrdersActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 CharSequence options[] = new CharSequence[]{
-                                        "Accept",
-                                        "Deny"
+                                        "Delete",
+                                        "Cancel"
                                 };
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AdminOrdersActivity.this);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(UserOrdersActivity.this);
                                 builder.setTitle("Have you shipped this order?");
 
                                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -101,9 +99,9 @@ public class AdminOrdersActivity extends AppCompatActivity {
 
                     @NonNull
                     @Override
-                    public AdminOrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    public OrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.pending_orders_layout, parent,false);
-                        return new AdminOrdersViewHolder(v);
+                        return new OrdersViewHolder(v);
                     }
                 };
         ordersList.setAdapter(adapter);
@@ -114,11 +112,11 @@ public class AdminOrdersActivity extends AppCompatActivity {
         ordersRef.child(id).removeValue();
     }
 
-    public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder{
+    public static class OrdersViewHolder extends RecyclerView.ViewHolder{
         public TextView orderPhone, orderPrice, orderAddress, name, date, time;
         public Button showOrdersBtn;
 
-        public AdminOrdersViewHolder(@NonNull View itemView) {
+        public OrdersViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.user_name_order);
             orderPrice = itemView.findViewById(R.id.total_price_order);
@@ -131,3 +129,4 @@ public class AdminOrdersActivity extends AppCompatActivity {
         }
     }
 }
+

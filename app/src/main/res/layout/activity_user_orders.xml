@@ -4,21 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.AdminOrderDetailsActivity"
-    android:background="@color/background">
+    tools:context=".UserOrdersActivity">
 
     <RelativeLayout
-        android:id="@+id/rl3"
+        android:id="@+id/rl2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimaryDark"
         android:layout_alignParentTop="true"
         >
         <TextView
-            android:id="@+id/order_products"
+            android:id="@+id/total_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Products"
+            android:text="Pending orders"
             android:textColor="@android:color/white"
             android:textSize="25sp"
             android:textAlignment="center"
@@ -30,13 +29,12 @@
 
     />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_list"
+        android:id="@+id/orders_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl3"
+        android:layout_below="@+id/rl2"
         >
 
     </androidx.recyclerview.widget.RecyclerView>
-
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.Admin;
+package com.example.magazinarticolesportive;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,30 +11,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.magazinarticolesportive.Model.Cart;
-import com.example.magazinarticolesportive.R;
+import com.example.magazinarticolesportive.Prevalent.Prevalent;
 import com.example.magazinarticolesportive.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class AdminOrderDetailsActivity extends AppCompatActivity {
+public class OrderDetailsActivity extends AppCompatActivity {
 
     private RecyclerView productsList;
     RecyclerView.LayoutManager layoutManager;
-    private DatabaseReference cartListRef;
-    private String userID = "";
+    private DatabaseReference ordersRef;
+    private String orderID = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_order_details);
+        setContentView(R.layout.activity_order_details);
 
-        userID = getIntent().getStringExtra("id");
+        orderID = getIntent().getStringExtra("id");
         productsList = findViewById(R.id.product_list);
 
-        cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List")
-                .child("Admin View").child(userID).child("Products");
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders")
+                .child(Prevalent.currentUser.getPhone())
+                .child(orderID)
+                .child("Products");
         productsList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         productsList.setLayoutManager(layoutManager);
@@ -47,7 +50,7 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
         super.onStart();
 
         FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>()
-                .setQuery(cartListRef, Cart.class).build();
+                .setQuery(ordersRef, Cart.class).build();
 
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
             @Override
@@ -55,7 +58,6 @@ public class AdminOrderDetailsActivity extends AppCompatActivity {
                 holder.txtQuantity.setText("Quantity =" + model.getQuantity());
                 holder.txtName.setText(model.getName());
                 holder.txtPrice.setText("Price = " + model.getPrice());
-
                 double productPrice = Double.valueOf(model.getPrice()) * Double.valueOf(model.getQuantity());
                 holder.txtTotalProductPrice.setText("Total price = " + productPrice);
             }
