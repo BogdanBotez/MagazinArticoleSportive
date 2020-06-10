@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.magazinarticolesportive.Admin.AdminEditProductActivity;
 import com.example.magazinarticolesportive.Model.Products;
 import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.User.CartActivity;
 import com.example.magazinarticolesportive.ViewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -97,11 +98,10 @@ public class HomeActivity extends AppCompatActivity
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
- /*       if (!type.equals("admin")) {
+        if (!type.equals("admin")) {
             userNameTextView.setText(Prevalent.currentUser.getName());
             Picasso.get().load(Prevalent.currentUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
-        }*/
-
+        }
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

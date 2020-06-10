@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive;
+package com.example.magazinarticolesportive.User;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,13 +10,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.magazinarticolesportive.HomeActivity;
 import com.example.magazinarticolesportive.Prevalent.Prevalent;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.example.magazinarticolesportive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,9 +33,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     //Todo cost transport
     private EditText nameEditText, phoneEditText, addressEditText;
+    private TextView totalPriceTxt;
     private Button confirmOrderBtn;
     private String totalPrice = "";
-    private String orderID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,11 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_order);
 
         totalPrice = getIntent().getStringExtra("Total Price");
-
         confirmOrderBtn = findViewById(R.id.confirm_order_btn);
         nameEditText = findViewById(R.id.name_confirm_order);
         phoneEditText = findViewById(R.id.phone_confirm_order);
         addressEditText = findViewById(R.id.address_confirm_order);
+        totalPriceTxt = findViewById(R.id.total_price_confirm_order);
 
         confirmOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +77,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         phoneEditText.setText(Prevalent.currentUser.getPhone());
         nameEditText.setText(Prevalent.currentUser.getName());
         addressEditText.setText(Prevalent.currentUser.getAddress());
+        totalPriceTxt.setText("Total price:  " + totalPrice + "RON");
     }
 
     private void ConfirmOrder() {
@@ -111,25 +113,12 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                     .child(Prevalent.currentUser.getPhone()).child("Products"),
                             ordersRef.child("Products")
                     );
-
-                  /*  FirebaseDatabase.getInstance().getReference()
-                            .child("Cart List")
-                            .child("User View")
-                            .child(Prevalent.currentUser.getPhone())
-                            .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {*/
-
                     Toast.makeText(ConfirmOrderActivity.this, "You have confirmed the order!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ConfirmOrderActivity.this, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
-      /*                      }
 
-                        }
-                    });*/
                 }
             }
         });

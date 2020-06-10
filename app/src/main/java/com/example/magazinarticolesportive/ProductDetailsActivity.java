@@ -34,8 +34,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private ElegantNumberButton quantityBtn;
     private TextView productPrice, productDescription, productName, productSport, productSize, productCategory;
     private String productID = "";
-    private String state = "";
-    private String orderID = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).getKey();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productSport = findViewById(R.id.product_sport_details);
         productSize = findViewById(R.id.product_size_details);
         productCategory = findViewById(R.id.product_category_details);
-        //ToDo the rest
 
         getProductDetails(productID);
 
@@ -70,7 +67,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CheckOrderState();
+        //CheckOrderState();
     }
 
     private void addToCartList() {
@@ -100,21 +97,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            cartListRef.child("Admin View").child(Prevalent.currentUser.getPhone()).child("Products")
-                                    .child(productID).updateChildren(cartMap)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()){
                                                 Toast.makeText(ProductDetailsActivity.this, "Product added to your cart.", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class);
                                                 startActivity(intent);
                                             }
                                         }
-                                    });
-                        }
-                    }
                 });
 
 
@@ -151,9 +139,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     if(products.getQuantity() <= 10 )
                     {
-                        if(products.getQuantity() >= 0) {
+                        if(products.getQuantity() > 0) {
                             quantityBtn.setRange(1, products.getQuantity());
-                            //TODO testeaza daca functioneaza cand sunt 0 buc
                         }else {
                             Toast.makeText(ProductDetailsActivity.this, "The product is sold out", Toast.LENGTH_SHORT).show();
                             finish();
@@ -177,7 +164,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void CheckOrderState(){
+/*    private void CheckOrderState(){
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).child(orderID);
         orderRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -199,6 +186,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
 }

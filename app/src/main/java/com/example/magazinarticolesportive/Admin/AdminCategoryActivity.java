@@ -16,7 +16,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
     private ImageView tops, pants, shoes, sportEquipment;
 
-    private Button logoutBtn, checkOrdersBtn, editProductBtn;
+    private Button logoutBtn, editProductBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,6 @@ public class AdminCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_category);
 
         logoutBtn = findViewById(R.id.admin_logout_btn);
-        checkOrdersBtn = findViewById(R.id.check_orders_btn);
         editProductBtn = findViewById(R.id.edit_product_btn);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -34,16 +33,6 @@ public class AdminCategoryActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
-            }
-        });
-
-        checkOrdersBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminCategoryActivity.this, AdminOrdersActivity.class);
-
-                startActivity(intent);
-
             }
         });
 

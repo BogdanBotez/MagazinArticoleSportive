@@ -100,7 +100,7 @@ public class UserOrdersActivity extends AppCompatActivity {
                     @NonNull
                     @Override
                     public OrdersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.pending_orders_layout, parent,false);
+                        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_orders_layout, parent,false);
                         return new OrdersViewHolder(v);
                     }
                 };

@@ -61,7 +61,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             questionTitle.setText("Set an answer for the next security question");
             verifyBtn.setText("Set");
 
-            displayAnswer();
+            //displayAnswer();
 
             verifyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

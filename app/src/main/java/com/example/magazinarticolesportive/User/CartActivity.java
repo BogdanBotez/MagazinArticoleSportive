@@ -1,5 +1,5 @@
 //TODO chestia cu comenzile multiple
-package com.example.magazinarticolesportive;
+package com.example.magazinarticolesportive.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +18,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.magazinarticolesportive.HomeActivity;
 import com.example.magazinarticolesportive.Model.Cart;
+import com.example.magazinarticolesportive.Model.Products;
 import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.ProductDetailsActivity;
+import com.example.magazinarticolesportive.R;
 import com.example.magazinarticolesportive.ViewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -29,6 +34,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -55,6 +66,11 @@ public class CartActivity extends AppCompatActivity {
         nextProcessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (totalPrice < 250) {
+                    Toast.makeText(CartActivity.this, "Orders below 250RON have a 25RON delivery fee.", Toast.LENGTH_SHORT).show();
+                    totalPrice += 25;
+                }
+
                 Intent intent = new Intent(CartActivity.this, ConfirmOrderActivity.class);
                 intent.putExtra("Total Price", String.valueOf(totalPrice));
                 startActivity(intent);
@@ -67,11 +83,11 @@ public class CartActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        CheckOrderState();
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+        final DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
-
+        //if(CheckProductQuantity()) {
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                         .setQuery(cartListRef.child("User View")
@@ -112,12 +128,12 @@ public class CartActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                        Toast.makeText(CartActivity.this, "The product has been removed from the cart", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(CartActivity.this, HomeActivity.class);
-                                                        startActivity(intent);
-                                                    }
-
+                                                Toast.makeText(CartActivity.this, "The product has been removed from the cart", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(CartActivity.this, HomeActivity.class);
+                                                startActivity(intent);
                                             }
+
+                                        }
                                     });
                                 }
                             }
@@ -125,6 +141,7 @@ public class CartActivity extends AppCompatActivity {
                         builder.show();
                     }
                 });
+
             }
 
             @NonNull
@@ -140,7 +157,50 @@ public class CartActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    private void CheckOrderState() {
+    //}
+    private void CheckProductQuantity() {
+        final DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child("User View").child(Prevalent.currentUser.getPhone()).child("Products");
+
+        final List<Products> cartProducts = new ArrayList<>();
+
+        cartListRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshotCart) {
+
+                final Cart cartSnap = dataSnapshotCart.getValue(Cart.class);
+
+                for (DataSnapshot cartSnapshot : dataSnapshotCart.getChildren()) {
+                    cartProducts.add(cartSnapshot.getValue(Products.class));
+                    Toast.makeText(CartActivity.this, cartProducts.get(0).toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+               /* productsRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshotProd) {
+                        Products prodSnap = dataSnapshotProd.getValue(Products.class);
+                        HashMap<Object, String> hashPrd = new HashMap<>((Map<?, ? extends String>) prodSnap);
+                        if(prodSnap.getQuantity() < Integer.parseInt( cartSnap.getQuantity())){
+                            cartListRef.child(prodSnap.getPid()).removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }*/
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+}
+
+/*    private void CheckOrderState() {
         String orderID = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).getKey();
         DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).child(orderID);
         orderRef.addValueEventListener(new ValueEventListener() {
@@ -170,5 +230,5 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
-    }
-}
+    }*/
+
