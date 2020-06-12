@@ -46,7 +46,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Button nextProcessBtn;
-    private TextView txtTotalPrice, txtWaitMessage;
+    private TextView txtTotalPrice;
     private double totalPrice = 0;
 
     @Override
@@ -58,7 +58,6 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        txtWaitMessage = findViewById(R.id.wait_message_cart);
 
         nextProcessBtn = findViewById(R.id.next_process_btn);
         txtTotalPrice = findViewById(R.id.total_price);
@@ -85,9 +84,9 @@ public class CartActivity extends AppCompatActivity {
 
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
-        final DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
-        //if(CheckProductQuantity()) {
+        CheckProductQuantity();
+
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
                         .setQuery(cartListRef.child("User View")
@@ -157,78 +156,49 @@ public class CartActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-    //}
     private void CheckProductQuantity() {
-        final DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
-        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child("User View").child(Prevalent.currentUser.getPhone()).child("Products");
 
-        final List<Products> cartProducts = new ArrayList<>();
+        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child("User View").child(Prevalent.currentUser.getPhone()).child("Products");
+        final DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
+
 
         cartListRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshotCart) {
 
-                final Cart cartSnap = dataSnapshotCart.getValue(Cart.class);
-
                 for (DataSnapshot cartSnapshot : dataSnapshotCart.getChildren()) {
-                    cartProducts.add(cartSnapshot.getValue(Products.class));
-                    Toast.makeText(CartActivity.this, cartProducts.get(0).toString(), Toast.LENGTH_SHORT).show();
+                    final Products prod = cartSnapshot.getValue(Products.class);
+
+                    productsRef.child(prod.getPid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshotProd) {
+
+                            int prodStock = dataSnapshotProd.child("quantity").getValue(Integer.class);
+                            if (prod.getQuantity() > prodStock) {
+                                cartListRef.child(prod.getPid()).removeValue();
+                                Toast.makeText(CartActivity.this, "The stock quantity for one or more products has changed.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(CartActivity.this, CartActivity.class);
+                                //Todo citeste putin despre flags ca poate intreaba
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             }
-               /* productsRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshotProd) {
-                        Products prodSnap = dataSnapshotProd.getValue(Products.class);
-                        HashMap<Object, String> hashPrd = new HashMap<>((Map<?, ? extends String>) prodSnap);
-                        if(prodSnap.getQuantity() < Integer.parseInt( cartSnap.getQuantity())){
-                            cartListRef.child(prodSnap.getPid()).removeValue();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }*/
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+
     }
 }
-
-/*    private void CheckOrderState() {
-        String orderID = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).getKey();
-        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).child(orderID);
-        orderRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    String orderState = dataSnapshot.child("state").getValue().toString();
-                    String name = dataSnapshot.child("name").getValue().toString();
-                    if (orderState.equals("approved")) {
-                        txtTotalPrice.setText(name + ", your order it's approved");
-                        recyclerView.setVisibility(View.GONE);
-                        txtWaitMessage.setVisibility(View.VISIBLE);
-                        nextProcessBtn.setVisibility(View.GONE);
-                        Toast.makeText(CartActivity.this, "You can purchase more after u receive your last order", Toast.LENGTH_SHORT).show();
-                    } else if (orderState.equals("pending")) {
-                        txtTotalPrice.setText(name + ", your order it's not approved yet");
-                        recyclerView.setVisibility(View.GONE);
-                        txtWaitMessage.setVisibility(View.VISIBLE);
-                        nextProcessBtn.setVisibility(View.GONE);
-                        Toast.makeText(CartActivity.this, "You can purchase more after u receive your last order", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-

@@ -1,9 +1,27 @@
 package com.example.magazinarticolesportive.Model;
 
 public class Products {
-    private String category, date, description, image, name, pid, size, time, gender, sport;
+    private String category;
+    private String date;
+    private String description;
+    private String image;
+    private String name;
+    private String pid;
+    private String size;
+    private String time;
+    private String gender;
+    private String sport;
+    private String discount;
     private double price;
     private int quantity;
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
+    }
 
     public String getSport() {
         return sport;
@@ -13,7 +31,7 @@ public class Products {
         this.sport = sport;
     }
 
-    public Products(String category, String date, String description, String image, String name, String pid, String size, String time, String gender, String sport, double price, int quantity) {
+    public Products(String category, String date, String description, String image, String name, String pid, String size, double price, int quantity, String time, String gender, String sport) {
         this.category = category;
         this.date = date;
         this.description = description;
@@ -24,6 +42,15 @@ public class Products {
         this.time = time;
         this.gender = gender;
         this.sport = sport;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public Products(String date, int quantity, double price, String name, String discount, String pid,  String time) {
+        this.date = date;
+        this.name = name;
+        this.pid = pid;
+        this.time = time;
         this.price = price;
         this.quantity = quantity;
     }

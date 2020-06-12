@@ -2,16 +2,9 @@ package com.example.magazinarticolesportive.Model;
 
 public class Cart {
 
-    private String pid, name, quantity, price, discount;
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
+    private String pid, name, discount;
+    private double price;
+    private int quantity;
 
     public Cart(){
 
@@ -33,13 +26,7 @@ public class Cart {
         this.name = name;
     }
 
-    public String getPrice() {
-        return price;
-    }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
 
     public String getDiscount() {
         return discount;
@@ -49,11 +36,27 @@ public class Cart {
         this.discount = discount;
     }
 
-    public Cart(String pid, String name, String quantity, String price, String discount) {
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Cart(String pid, String name, String discount, double price, int quantity) {
         this.pid = pid;
         this.name = name;
-        this.quantity = quantity;
-        this.price = price;
         this.discount = discount;
+        this.price = price;
+        this.quantity = quantity;
     }
 }

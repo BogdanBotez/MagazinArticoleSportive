@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.HomeActivity;
+import com.example.magazinarticolesportive.Model.Products;
 import com.example.magazinarticolesportive.Prevalent.Prevalent;
 import com.example.magazinarticolesportive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,6 +54,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Check();
+                updateQuantity();
             }
         });
 
@@ -100,8 +102,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         ordersMap.put("address", addressEditText.getText().toString());
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
-        ordersMap.put("state", "pending");
-
 
         ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -120,6 +120,56 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     finish();
 
                 }
+            }
+        });
+
+    }
+
+    private void updateQuantity() {
+        final DatabaseReference productsRef =
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Products");
+
+        final DatabaseReference cartListRef =
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Cart List")
+                        .child("User View")
+                        .child(Prevalent.currentUser.getPhone())
+                        .child("Products");
+
+        cartListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshotCart) {
+
+                for (DataSnapshot cartSnapshot : dataSnapshotCart.getChildren()) {
+                    final Products cartProduct = cartSnapshot.getValue(Products.class);
+
+                    productsRef.child(cartProduct.getPid())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshotProduct) {
+                            int quantity = dataSnapshotProduct.child("quantity").getValue(Integer.class);
+
+                            HashMap<String, Object> updatedProduct = new HashMap<>();
+
+                            quantity -= cartProduct.getQuantity();
+                            updatedProduct.put("quantity", quantity);
+                            productsRef.child(cartProduct.getPid()).updateChildren(updatedProduct);
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 

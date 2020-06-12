@@ -14,8 +14,10 @@ import android.widget.Toast;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.magazinarticolesportive.Model.Products;
 import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.User.WishListActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,7 @@ import java.util.HashMap;
 public class ProductDetailsActivity extends AppCompatActivity {
 
     private Button addProductToCartBtn;
+    private FloatingActionButton addProductToWishListBtn;
     private ImageView productImage;
     private ElegantNumberButton quantityBtn;
     private TextView productPrice, productDescription, productName, productSport, productSize, productCategory;
@@ -52,8 +55,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productSport = findViewById(R.id.product_sport_details);
         productSize = findViewById(R.id.product_size_details);
         productCategory = findViewById(R.id.product_category_details);
+        addProductToWishListBtn = findViewById(R.id.add_to_wish_details_btn);
 
         getProductDetails(productID);
+
+        addProductToWishListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToWishList();
+            }
+        });
 
         addProductToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,20 +75,45 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void addToWishList() {
+
+        final DatabaseReference wishListRef = FirebaseDatabase.getInstance().getReference().child("Wish List");
+
+        final HashMap<String, Object> wishMap = new HashMap<>();
+        wishMap.put("pid", productID);
+        wishMap.put("name", productName.getText().toString());
+        wishMap.put("price", Double.parseDouble(productPrice.getText().toString()));
+        wishMap.put("sport", productSport.getText().toString());
+        wishMap.put("category", productCategory.getText().toString());
+
+        wishListRef.child(Prevalent.currentUser.getPhone())
+                .child("Products").child(productID).updateChildren(wishMap)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(ProductDetailsActivity.this, "Product added to your wish list.", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ProductDetailsActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
-        //CheckOrderState();
     }
 
     private void addToCartList() {
         String saveCurrentTime, saveCurrentDate;
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("DD MM YYYY");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd MM yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:MM:SS");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
@@ -85,10 +121,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("pid", productID);
         cartMap.put("name", productName.getText().toString());
-        cartMap.put("price", String.valueOf(productPrice.getText()));
+        cartMap.put("price", Double.parseDouble(productPrice.getText().toString()));
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
-        cartMap.put("quantity", quantityBtn.getNumber());
+        cartMap.put("quantity", Integer.parseInt( quantityBtn.getNumber()));
         cartMap.put("discount", "");
 
         //adaugarea in lista a produselor
@@ -106,26 +142,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 });
 
 
-    }
-
-    private void updateQuantity(final String qtyOrdered) {
-        final DatabaseReference productRef = FirebaseDatabase.getInstance().getReference().child("Products").child(productID);
-        productRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Products prod = dataSnapshot.getValue(Products.class);
-
-                int newQuantity = prod.getQuantity() - Integer.parseInt(qtyOrdered);
-                HashMap<String, Object> updatedProduct = new HashMap<>();
-                updatedProduct.put("quantity", newQuantity);
-                productRef.updateChildren(updatedProduct);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     private void getProductDetails(final String productID) {
@@ -163,29 +179,5 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
     }
-
-/*    private void CheckOrderState(){
-        DatabaseReference orderRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).child(orderID);
-        orderRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-
-                    String shippingState = dataSnapshot.child("state").getValue().toString();
-                    if(shippingState.equals("shipped")){
-                        state = "Order completed";
-                    }else if(shippingState.equals("not shipping")){
-
-                        state = "Order placed";
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 
 }

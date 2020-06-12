@@ -14,32 +14,32 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/product_price_cart"
+            android:id="@+id/product_price_wish"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="Product price"
             android:layout_marginLeft="2dp"
-            android:layout_below="@id/product_name_cart"
+            android:layout_below="@id/product_name_wish"
             android:textColor="@android:color/white"
             android:textSize="15dp"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/product_quantity_cart"
+            android:id="@+id/product_sport_wish"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Quantity"
+            android:text="Sport"
             android:textAlignment="viewEnd"
             android:textColor="@android:color/white"
             android:layout_marginRight="5dp"
-            android:layout_below="@id/product_name_cart"
+            android:layout_below="@id/product_name_wish"
             android:textSize="15dp"
             android:layout_marginLeft="5dp"
             android:layout_alignParentEnd="true"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/product_name_cart"
+            android:id="@+id/product_name_wish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Product Name"
@@ -50,11 +50,11 @@
             android:textStyle="bold"
             />
         <TextView
-            android:id="@+id/product_total_price_cart"
+            android:id="@+id/product_category_wish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Product total price"
-            android:layout_below="@+id/product_quantity_cart"
+            android:text="Category"
+            android:layout_below="@+id/product_sport_wish"
             android:textColor="@android:color/white"
             android:layout_marginRight="5dp"
             android:textSize="15dp"

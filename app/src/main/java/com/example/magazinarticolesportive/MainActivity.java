@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-        String userPhone = Paper.book().read(Prevalent.userPhone);
+     /*   String userPhone = Paper.book().read(Prevalent.userPhone);
         String userPassword = Paper.book().read(Prevalent.userPassword);
         if(userPhone != "" && userPassword != "")
         {
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 loadingBar.show();
 
             }
-        }
+        }*/
     }
 
     private void AllowAccess(final String phone, final String password) {

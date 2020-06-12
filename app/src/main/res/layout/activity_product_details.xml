@@ -109,4 +109,16 @@
             android:text="Add to cart"
             android:textSize="15sp"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_to_wish_details_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/wish"
+            android:backgroundTint="@color/background"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            />
+
 </RelativeLayout>
