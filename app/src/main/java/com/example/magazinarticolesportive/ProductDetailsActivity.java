@@ -145,19 +145,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         productRef.child(productID).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     Products products = dataSnapshot.getValue(Products.class);
 
-                    if(products.getQuantity() <= 10 )
-                    {
-                        if(products.getQuantity() > 0) {
-                            quantityBtn.setRange(1, products.getQuantity());
-                        }else {
-                            Toast.makeText(ProductDetailsActivity.this, "The product is sold out", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    }
+                    checkQuantity(products.getQuantity());
 
                     Picasso.get().load(products.getImage()).into(productImage);
                     productName.setText(products.getName());
@@ -174,6 +166,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void checkQuantity(int quantity) {
+        if(quantity <= 10 )
+        {
+            if(quantity > 0) {
+                quantityBtn.setRange(1, quantity);
+            }else {
+                Toast.makeText(ProductDetailsActivity.this, "The product is sold out", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
     }
 
 }

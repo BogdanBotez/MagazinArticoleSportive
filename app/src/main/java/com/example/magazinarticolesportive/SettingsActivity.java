@@ -75,7 +75,7 @@ public class SettingsActivity extends AppCompatActivity {
         updateTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checker.equals("clicked")){
+                if (checker.equals("clicked")) {
                     saveUserInfo();
                 } else {
                     updateOnlyUserInfo();
@@ -90,7 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
                 checker = "clicked";
 
                 CropImage.activity(imageUri)
-                        .setAspectRatio(1,1)
+                        .setAspectRatio(1, 1)
                         .start(SettingsActivity.this);
 
 
@@ -124,13 +124,12 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null){
+        if (resultCode == RESULT_OK && requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && data != null) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             imageUri = result.getUri();
 
             profileImageView.setImageURI(imageUri);
-        }
-        else{
+        } else {
             Toast.makeText(this, "Error selecting the image. Try again.", Toast.LENGTH_SHORT).show();
 
             startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
@@ -138,14 +137,14 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void saveUserInfo(){
-        if(TextUtils.isEmpty(nameEditText.getText().toString())){
+    private void saveUserInfo() {
+        if (TextUtils.isEmpty(nameEditText.getText().toString())) {
             Toast.makeText(this, "Name field completion is mandatory", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(phoneEditText.getText().toString())){
+        } else if (TextUtils.isEmpty(phoneEditText.getText().toString())) {
             Toast.makeText(this, "Phone field completion is mandatory", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(addressEditText.getText().toString())){
+        } else if (TextUtils.isEmpty(addressEditText.getText().toString())) {
             Toast.makeText(this, "Address field completion is mandatory", Toast.LENGTH_SHORT).show();
-        }else if(checker.equals("clicked")){
+        } else if (checker.equals("clicked")) {
             uploadImage();
         }
     }
@@ -157,17 +156,17 @@ public class SettingsActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        if(imageUri != null){
+        if (imageUri != null) {
             final StorageReference fileRef = storageProfileImageRef
-                    .child(Prevalent.currentUser.getPhone()+ ".jpg");
+                    .child(Prevalent.currentUser.getPhone() + ".jpg");
 
             uploadTask = fileRef.putFile(imageUri);
 
             uploadTask.continueWithTask(new Continuation() {
                 @Override
                 public Object then(@NonNull Task task) throws Exception {
-                    if(!task.isSuccessful()){
-                        throw  task.getException();
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
                     }
                     return fileRef.getDownloadUrl();
                 }
@@ -175,11 +174,10 @@ public class SettingsActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Uri downloadUrl = task.getResult();
                                 myUrl = downloadUrl.toString();
 
-                                //ToDo pentru update cantitate.
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users");
                                 HashMap<String, Object> userMap = new HashMap<>();
                                 userMap.put("name", nameEditText.getText().toString());
@@ -192,8 +190,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
                                 Toast.makeText(SettingsActivity.this, "Your credentials have been updated successfully!", Toast.LENGTH_SHORT).show();
                                 finish();
-                            }
-                            else{
+                            } else {
                                 progressDialog.dismiss();
                                 Toast.makeText(SettingsActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                             }
@@ -213,18 +210,17 @@ public class SettingsActivity extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    if(dataSnapshot.child("image").exists()){
-                        String image = dataSnapshot.child("image").getValue().toString();
-                        String name = dataSnapshot.child("name").getValue().toString();
-                        String phone = dataSnapshot.child("phone").getValue().toString();
-                        String address = dataSnapshot.child("address").getValue().toString();
+                if (dataSnapshot.exists()) {
+                    String image = dataSnapshot.child("image").getValue().toString();
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    String phone = dataSnapshot.child("phone").getValue().toString();
+                    String address = dataSnapshot.child("address").getValue().toString();
 
-                        Picasso.get().load(image).into(profileImageView);
-                        nameEditText.setText(name);
-                        phoneEditText.setText(phone);
-                        addressEditText.setText(address);
-                    }
+                    Picasso.get().load(image).into(profileImageView);
+                    nameEditText.setText(name);
+                    phoneEditText.setText(phone);
+                    addressEditText.setText(address);
+
                 }
             }
 

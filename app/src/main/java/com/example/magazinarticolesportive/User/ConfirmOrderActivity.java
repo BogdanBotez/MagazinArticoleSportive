@@ -31,8 +31,6 @@ import java.util.HashMap;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
-
-    //Todo cost transport
     private EditText nameEditText, phoneEditText, addressEditText;
     private TextView totalPriceTxt;
     private Button confirmOrderBtn;
@@ -53,14 +51,14 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         confirmOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Check();
+                check();
                 updateQuantity();
             }
         });
 
     }
 
-    private void Check() {
+    private void check() {
         if (TextUtils.isEmpty(nameEditText.getText().toString())) {
             Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(phoneEditText.getText().toString())) {

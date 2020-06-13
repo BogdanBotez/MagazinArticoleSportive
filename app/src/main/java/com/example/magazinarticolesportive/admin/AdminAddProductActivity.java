@@ -232,6 +232,7 @@ public class AdminAddProductActivity extends AppCompatActivity
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Intent intent = new Intent(AdminAddProductActivity.this, AdminCategoryActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                     loadingBar.dismiss();
                                     Toast.makeText(AdminAddProductActivity.this, "Product has been added successfully", Toast.LENGTH_SHORT).show();

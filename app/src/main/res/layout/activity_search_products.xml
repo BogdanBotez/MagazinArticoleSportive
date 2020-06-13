@@ -16,9 +16,9 @@
         >
         <EditText
             android:id="@+id/search_product_name"
-            android:layout_width="290dp"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:hint="Enter product name"
+            android:hint="@string/enter_product_s_search_act"
             android:textColorHint="@android:color/black"
             android:textColor="@android:color/black"
             android:textSize="18sp"
@@ -31,7 +31,7 @@
 
         <Button
             android:id="@+id/search_product_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="@android:dimen/thumbnail_width"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:layout_toRightOf="@id/search_product_name"
@@ -39,6 +39,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_centerInParent="true"
             android:textColor="@color/colorAccent"
             android:padding="8dp"

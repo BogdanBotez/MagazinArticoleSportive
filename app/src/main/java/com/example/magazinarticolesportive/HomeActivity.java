@@ -118,8 +118,8 @@ public class HomeActivity extends AppCompatActivity
         if (category.equals("all")) {
 
             options = new FirebaseRecyclerOptions.Builder<Products>()
-                            .setQuery(productReference, Products.class)
-                            .build();
+                    .setQuery(productReference, Products.class)
+                    .build();
         } else {
             options =
                     new FirebaseRecyclerOptions.Builder<Products>()
@@ -128,46 +128,46 @@ public class HomeActivity extends AppCompatActivity
         }
 
 
-            FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
-                    new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
-                        @Override
-                        protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
-                            holder.txtProductName.setText(model.getName());
-                            holder.txtProductDescription.setText(model.getDescription());
-                            holder.txtProductPrice.setText("Price = " + model.getPrice() + "RON");
-                            Picasso.get().load(model.getImage()).into(holder.productImageView);
+        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
+                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
+                        holder.txtProductName.setText(model.getName());
+                        holder.txtProductDescription.setText(model.getDescription());
+                        holder.txtProductPrice.setText("Price = " + model.getPrice() + "RON");
+                        Picasso.get().load(model.getImage()).into(holder.productImageView);
 
 
-                            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
 
-                                    if (type.equals("admin")) {
-                                        Intent intent = new Intent(HomeActivity.this, AdminEditProductActivity.class);
-                                        intent.putExtra("pid", model.getPid());
-                                        startActivity(intent);
+                                if (type.equals("admin")) {
+                                    Intent intent = new Intent(HomeActivity.this, AdminEditProductActivity.class);
+                                    intent.putExtra("pid", model.getPid());
+                                    startActivity(intent);
 
-                                    } else {
-                                        Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
-                                        intent.putExtra("pid", model.getPid());
-                                        startActivity(intent);
-                                    }
+                                } else {
+                                    Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
+                                    intent.putExtra("pid", model.getPid());
+                                    startActivity(intent);
                                 }
-                            });
-                        }
+                            }
+                        });
+                    }
 
-                        @NonNull
-                        @Override
-                        public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.products_layout, parent, false);
-                            ProductViewHolder holder = new ProductViewHolder(v);
-                            return holder;
-                        }
-                    };
+                    @NonNull
+                    @Override
+                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.products_layout, parent, false);
+                        ProductViewHolder holder = new ProductViewHolder(v);
+                        return holder;
+                    }
+                };
 
-            recyclerView.setAdapter(adapter);
-            adapter.startListening();
-        }
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
 
 
     public void OnBackPressed() {
@@ -202,14 +202,15 @@ public class HomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
 
+        int id = menuItem.getItemId();
 
         if (id == R.id.nav_cart) {
             if (!type.equals("admin")) {
                 Intent intent = new Intent(HomeActivity.this, CartActivity.class);
                 startActivity(intent);
             }
+
         } else if (id == R.id.nav_search) {
 
             getSearchCategory();

@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+@SuppressWarnings("ConstantConditions")
 public class CartActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -169,9 +170,11 @@ public class CartActivity extends AppCompatActivity {
                             int prodStock = dataSnapshotProd.child("quantity").getValue(Integer.class);
                             if (prod.getQuantity() > prodStock) {
                                 cartListRef.child(prod.getPid()).removeValue();
-                                Toast.makeText(CartActivity.this, "The stock quantity for one or more products has changed.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CartActivity.this,
+                                        "The stock quantity for one or more products has changed.",
+                                        Toast.LENGTH_SHORT)
+                                        .show();
                                 Intent intent = new Intent(CartActivity.this, CartActivity.class);
-                                //Todo citeste putin despre flags ca poate intreaba
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                             }

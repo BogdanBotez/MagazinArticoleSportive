@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,7 @@ public class AdminEditProductActivity extends AppCompatActivity {
     private ImageView image;
     private String productID = "";
     private DatabaseReference productRef;
+    private int defaultQuantity = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +98,11 @@ public class AdminEditProductActivity extends AppCompatActivity {
             productMap.put("pid", productID);
             productMap.put("name", sName);
             productMap.put("price", Double.parseDouble(sPrice));
-            productMap.put("quantity", newQuantity);
-
+            if(!sQuantity.equals("")) {
+                productMap.put("quantity", newQuantity);
+            } else {
+                productMap.put("quantity", defaultQuantity);
+            }
             productRef.updateChildren(productMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -124,7 +129,8 @@ public class AdminEditProductActivity extends AppCompatActivity {
 
                     name.setText(sName);
                     price.setText(sPrice);
-                    quantity.setHint("Available quantity: " + sQuantity + "; enter how much you want to add");
+                    quantity.setHint("Available quantity: " + sQuantity + "; enter how many pieces you want to add");
+                    quantity.setHintTextColor(Color.GRAY);
                     quantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
@@ -135,9 +141,7 @@ public class AdminEditProductActivity extends AppCompatActivity {
                         }
                     });
 
-                    quantity.setText(sQuantity);
                     Picasso.get().load(sImage).into(image);
-
                 }
             }
 
