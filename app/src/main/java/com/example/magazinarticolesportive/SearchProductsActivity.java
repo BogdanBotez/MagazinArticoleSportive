@@ -22,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class SearchProductsActivity extends AppCompatActivity {
 
 
@@ -29,7 +31,7 @@ public class SearchProductsActivity extends AppCompatActivity {
     private EditText inputText;
     private RecyclerView searchList;
     private String search;
-    private String type="";
+    private String type="", category="name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +43,15 @@ public class SearchProductsActivity extends AppCompatActivity {
         searchList = findViewById(R.id.search_list);
         searchList.setLayoutManager(new LinearLayoutManager(SearchProductsActivity.this));
         type = getIntent().getStringExtra("type");
+        category = getIntent().getStringExtra("category");
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 search = inputText.getText().toString();
+                search = StringUtils.lowerCase(search);
+                search = StringUtils.capitalize(search);
+                search.toUpperCase();
                 onStart();
             }
         });
@@ -60,9 +66,9 @@ public class SearchProductsActivity extends AppCompatActivity {
 
         //Cauta produsul dupa "name" - Todo poate fi folosit si pt categorii.
         FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
-                .setQuery(ref.orderByChild("name").startAt(search), Products.class).build();
+                .setQuery(ref.orderByChild(category).startAt(search).endAt(search + "\uf8ff"), Products.class).build();
 
-        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter = new FirebaseRecyclerAdapter <Products, ProductViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
                 holder.txtProductName.setText(model.getName());
@@ -93,7 +99,7 @@ public class SearchProductsActivity extends AppCompatActivity {
                 ProductViewHolder holder = new ProductViewHolder(v);
                 return holder;
             }
-        } ;
+        };
 
         searchList.setAdapter(adapter);
         adapter.startListening();

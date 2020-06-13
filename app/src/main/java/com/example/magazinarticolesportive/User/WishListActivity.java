@@ -47,6 +47,7 @@ public class WishListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
         homeBtn = findViewById(R.id.home_wish_btn);
         txtMessage = findViewById(R.id.txt_msg_wish);
 
@@ -75,11 +76,11 @@ public class WishListActivity extends AppCompatActivity {
                                 .child("Products"), Wish.class).build();
         FirebaseRecyclerAdapter<Wish, WishViewHolder> adapter = new FirebaseRecyclerAdapter<Wish, WishViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull WishViewHolder holder, int position, @NonNull final Wish model) {
-                holder.txtCategory.setText("Quantity =" + model.getCategory());
+            protected void onBindViewHolder(@NonNull WishViewHolder holder, int position, final Wish model) {
+                holder.txtCategory.setText("Category: " + model.getCategory());
                 holder.txtName.setText(model.getName());
                 holder.txtPrice.setText("Price = " + model.getPrice());
-                holder.txtSport.setText("Sport = " + model.getSport());
+                holder.txtSport.setText("Sport: " + model.getSport());
 
                 //Cand se apasa pe un produs
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +95,6 @@ public class WishListActivity extends AppCompatActivity {
                         builder.setItems(options, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int option) {
-                                //Edit
                                 if (option == 0) {
                                     Intent intent = new Intent(WishListActivity.this, ProductDetailsActivity.class);
                                     intent.putExtra("pid", model.getpId());
@@ -105,7 +105,7 @@ public class WishListActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Toast.makeText(WishListActivity.this, "The product has been removed from the cart", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(WishListActivity.this, "The product has been removed from the wish list", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(WishListActivity.this, HomeActivity.class);
                                                 startActivity(intent);
                                             }

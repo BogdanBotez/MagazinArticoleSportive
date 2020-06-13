@@ -83,8 +83,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         wishMap.put("pid", productID);
         wishMap.put("name", productName.getText().toString());
         wishMap.put("price", Double.parseDouble(productPrice.getText().toString()));
-        wishMap.put("sport", productSport.getText().toString());
         wishMap.put("category", productCategory.getText().toString());
+        wishMap.put("sport", productSport.getText().toString());
 
         wishListRef.child(Prevalent.currentUser.getPhone())
                 .child("Products").child(productID).updateChildren(wishMap)

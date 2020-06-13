@@ -20,7 +20,7 @@ public class Wish {
         this.pId = pId;
     }
 
-    public Wish(String pId, String name, double price, String category,  String sport) {
+    public Wish(String category, String name, String pId, double price, String sport) {
         this.pId = pId;
         this.name = name;
         this.sport = sport;

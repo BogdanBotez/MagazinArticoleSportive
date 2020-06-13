@@ -51,6 +51,7 @@ public class HomeActivity extends AppCompatActivity
 
     private String type = "";
     private String category = "all";
+    private String searchCategory = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +100,10 @@ public class HomeActivity extends AppCompatActivity
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
-       /* if (!type.equals("admin")) {
+        if (!type.equals("admin")) {
             userNameTextView.setText(Prevalent.currentUser.getName());
             Picasso.get().load(Prevalent.currentUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
-        }*/
+        }
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -249,13 +250,9 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
             }
         } else if (id == R.id.nav_search) {
-            Intent intent = new Intent(HomeActivity.this, SearchProductsActivity.class);
 
-            if (type.equals("admin")) {
-                intent.putExtra("type", "admin");
-            } else
-                intent.putExtra("type", "user");
-            startActivity(intent);
+            getSearchCategory();
+
 
         } else if (id == R.id.nav_categories) {
             applyCategory();
@@ -287,6 +284,51 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void getSearchCategory() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        builder.setTitle("Choose the category you want to search.");
+        final MaterialSpinner categorySpinner = new MaterialSpinner(HomeActivity.this);
+        builder.setView(categorySpinner);
+        categorySpinner.setItems("", "name", "sport", "size", "gender");
+        categorySpinner.setTextColor(Color.BLACK);
+        categorySpinner.setArrowColor(Color.BLACK);
+
+        categorySpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                searchCategory = item.toString();
+            }
+        });
+
+        builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(HomeActivity.this, SearchProductsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if (type.equals("admin")) {
+                    intent.putExtra("type", "admin");
+                } else
+                    intent.putExtra("type", "user");
+
+                intent.putExtra("category", searchCategory);
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
+    }
+
+
 
     private void applyCategory() {
 
