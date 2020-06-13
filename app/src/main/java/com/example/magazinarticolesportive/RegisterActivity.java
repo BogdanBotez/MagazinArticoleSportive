@@ -3,6 +3,7 @@ package com.example.magazinarticolesportive;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,10 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        CreateAccountButton = (Button) findViewById(R.id.register_btn);
-        InputName = (EditText) findViewById(R.id.register_name);
-        InputPhone = (EditText) findViewById(R.id.register_phone);
-        InputPassword = (EditText) findViewById(R.id.register_password);
+        CreateAccountButton = findViewById(R.id.register_btn);
+        InputName = findViewById(R.id.register_name);
+        InputPhone = findViewById(R.id.register_phone);
+        InputPassword = findViewById(R.id.register_password);
         loadingBar = new ProgressDialog(this);
 
         CreateAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -53,15 +54,14 @@ public class RegisterActivity extends AppCompatActivity {
         String password = InputPassword.getText().toString();
 
         if(TextUtils.isEmpty(name)){
-            Toast.makeText(this, "Please write your name...", Toast.LENGTH_SHORT).show();
+            InputName.setError("Please type your name.");
         }
 
-        else if(TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "Please write your phone...", Toast.LENGTH_SHORT).show();
+        else if(TextUtils.isEmpty(phone) || phone.length() < 10){
+            InputPhone.setError("Please type a valid phone number.");
         }
-
         else if(TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Please write your password...", Toast.LENGTH_SHORT).show();
+            InputPassword.setError("Please type a password.");
         }
         else
         {
@@ -76,9 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void ValidatePhone(final String name,final String phone, final String password) {
-        final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance().getReference();
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        final DatabaseReference rootRef;
+        rootRef = FirebaseDatabase.getInstance().getReference();
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(!(dataSnapshot.child("Users").child(phone).exists()))
@@ -88,19 +88,19 @@ public class RegisterActivity extends AppCompatActivity {
                     userDataMap.put("name", name);
                     userDataMap.put("password", password);
 
-                    RootRef.child("Users").child(phone).updateChildren(userDataMap)
+                    rootRef.child("Users").child(phone).updateChildren(userDataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful())
                                     {
+                                        addCoupon(rootRef, phone);
+
                                         Toast.makeText(RegisterActivity.this, "Your account has just been created", Toast.LENGTH_SHORT);
                                         loadingBar.dismiss();
 
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         startActivity(intent);
-
-
                                     }
                                     else
                                     {
@@ -127,5 +127,11 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void addCoupon(DatabaseReference rootRef, String phone) {
+        HashMap<String, Object> userCouponsMap = new HashMap<>();
+        userCouponsMap.put("new", 10);
+        rootRef.child("Users").child(phone).child("Coupons").updateChildren(userCouponsMap);
     }
 }

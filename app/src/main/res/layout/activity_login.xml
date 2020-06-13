@@ -27,7 +27,7 @@
         android:layout_below="@+id/login_logo"
         android:background="@drawable/input_design"
         android:padding="20dp"
-
+        android:maxLength="10"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:hint="Phone number"

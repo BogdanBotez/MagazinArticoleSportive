@@ -45,13 +45,14 @@ public class SearchProductsActivity extends AppCompatActivity {
         type = getIntent().getStringExtra("type");
         category = getIntent().getStringExtra("category");
 
+        inputText.setHint(inputText.getHint() + setHintByCategory());
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 search = inputText.getText().toString();
                 search = StringUtils.lowerCase(search);
                 search = StringUtils.capitalize(search);
-                search.toUpperCase();
                 onStart();
             }
         });
@@ -64,7 +65,6 @@ public class SearchProductsActivity extends AppCompatActivity {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Products");
 
-        //Cauta produsul dupa "name" - Todo poate fi folosit si pt categorii.
         FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
                 .setQuery(ref.orderByChild(category).startAt(search).endAt(search + "\uf8ff"), Products.class).build();
 
@@ -103,5 +103,24 @@ public class SearchProductsActivity extends AppCompatActivity {
 
         searchList.setAdapter(adapter);
         adapter.startListening();
+    }
+
+    private String setHintByCategory(){
+        String text = "";
+        switch (category) {
+            case "name":
+                text = " name";
+                break;
+            case "sport":
+                text = " sport.\nE.g.: Football";
+                break;
+            case "gender":
+                text = " gender.\nE.g.: Male, Unisex";
+                break;
+            case "size":
+                text = " size.\nE.g.: S, 42";
+                break;
+        }
+        return text;
     }
 }

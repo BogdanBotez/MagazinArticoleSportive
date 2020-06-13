@@ -23,12 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class UserOrdersActivity extends AppCompatActivity {
-
-
     private RecyclerView ordersList;
     private DatabaseReference ordersRef;
-    //TODO scade quantity din baza de date products.
-    private DatabaseReference productsRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

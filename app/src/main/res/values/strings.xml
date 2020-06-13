@@ -29,5 +29,5 @@
     <string name="menu_item_orders">Orders</string>
     <string name="menu_item_wish">Wish list</string>
     <string name="menu_item_logout">Logout</string>
-    <string name="enter_product_s_search_act">Enter product\'s </string>
+    <string name="enter_product_s_search_act">Type product\'s </string>
 </resources>

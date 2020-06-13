@@ -28,6 +28,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -35,8 +37,8 @@ import java.util.HashMap;
 public class AdminAddProductActivity extends AppCompatActivity
 {
 
-    private String Category, Description, ProductName, saveCurrentDate, saveCurrentTime,
-            productRandomKey, downloadImageUrl, Size, sport, gender;
+    private String category, description, productName, saveCurrentDate, saveCurrentTime,
+            productRandomKey, downloadImageUrl, size, sport, gender;
     private double Price;
     private int quantity;
     private Button AddProductButton;
@@ -58,7 +60,7 @@ public class AdminAddProductActivity extends AppCompatActivity
         setContentView(R.layout.activity_admin_add_product);
 
         //Primeste valoarea dupa cheia "category" , ex: womenTops
-        Category = getIntent().getExtras().get("category").toString();
+        category = getIntent().getExtras().get("category").toString();
         ProductImagesRef = FirebaseStorage.getInstance().getReference().child("Product Images");
         ProductRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
@@ -73,8 +75,8 @@ public class AdminAddProductActivity extends AppCompatActivity
         sportSpinner = findViewById(R.id.sport_spinner);
         genderSpinner = findViewById(R.id.gender_spinner);
 
-        genderSpinner.setItems("Male", "Female", "Unisex");
-        sportSpinner.setItems("Football", "Hockey", "Basketball", "Tennis", "Handball");
+        genderSpinner.setItems("Select gender", "Male", "Female", "Unisex");
+        sportSpinner.setItems("Select sport", "Football", "Box", "Basketball", "Tennis", "Handball");
 
         InputProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +106,8 @@ public class AdminAddProductActivity extends AppCompatActivity
             }
         });
     }
-    //select imag din galerie
 
+    //select imag din galerie
     private void OpenGallery() {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -126,22 +128,23 @@ public class AdminAddProductActivity extends AppCompatActivity
     }
 
     private void ValidateProductData() {
-        Description = InputProductDescription.getText().toString();
+        description = InputProductDescription.getText().toString();
         Price = Double.parseDouble(InputProductPrice.getText().toString());
-        ProductName = InputProductName.getText().toString();
+        productName = InputProductName.getText().toString();
+        productName = StringUtils.capitalize(productName);
         quantity = Integer.parseInt(InputProductQuantity.getText().toString());
-        Size = InputProductSize.getText().toString();
+        size = InputProductSize.getText().toString();
 
         if(ImageUri == null){
             Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(Description)){
+        else if(TextUtils.isEmpty(description)){
             Toast.makeText(this, "Please enter a description", Toast.LENGTH_SHORT).show();
         }
         else if(Price <= 0){
             Toast.makeText(this, "Please enter a price", Toast.LENGTH_SHORT).show();
         }
-        else if(TextUtils.isEmpty(ProductName)){
+        else if(TextUtils.isEmpty(productName)){
             Toast.makeText(this, "Please enter a name for the product", Toast.LENGTH_SHORT).show();
         }
         else if(quantity <= 0){
@@ -216,13 +219,13 @@ public class AdminAddProductActivity extends AppCompatActivity
                 productMap.put("pid", productRandomKey);
                 productMap.put("date", saveCurrentDate);
                 productMap.put("time", saveCurrentTime);
-                productMap.put("description", Description);
+                productMap.put("description", description);
                 productMap.put("image", downloadImageUrl);
-                productMap.put("category", Category);
+                productMap.put("category", category);
                 productMap.put("price", Price);
-                productMap.put("name", ProductName);
+                productMap.put("name", productName);
                 productMap.put("quantity", quantity);
-                productMap.put("size", Size);
+                productMap.put("size", size);
                 productMap.put("sport", sport);
                 productMap.put("gender", gender);
 

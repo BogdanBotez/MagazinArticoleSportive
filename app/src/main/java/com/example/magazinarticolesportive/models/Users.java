@@ -2,6 +2,24 @@ package com.example.magazinarticolesportive.models;
 
 public class Users {
     private String name, phone, password, image, address;
+    private double coupon;
+
+    public Users(String name, String phone, String password, String image, String address, double coupon) {
+        this.name = name;
+        this.phone = phone;
+        this.password = password;
+        this.image = image;
+        this.address = address;
+        this.coupon = coupon;
+    }
+
+    public double getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(double coupon) {
+        this.coupon = coupon;
+    }
 
     public String getName() {
         return name;

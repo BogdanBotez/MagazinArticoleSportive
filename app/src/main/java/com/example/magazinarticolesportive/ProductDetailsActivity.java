@@ -34,8 +34,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private FloatingActionButton addProductToWishListBtn;
     private ImageView productImage;
     private ElegantNumberButton quantityBtn;
-    private TextView productPrice, productDescription, productName, productSport, productSize, productCategory;
-    private String productID = "";
+    private TextView productPrice, productDescription, productName, productSport, productSize, productCategory, productGender;
+    private String  productID = "";
+    private double priceDou;
+    private String nameStr="", descriptionStr="", sportStr="", categoryStr="", sizeStr="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productSport = findViewById(R.id.product_sport_details);
         productSize = findViewById(R.id.product_size_details);
         productCategory = findViewById(R.id.product_category_details);
+        productGender = findViewById(R.id.product_gender_details);
         addProductToWishListBtn = findViewById(R.id.add_to_wish_details_btn);
 
         getProductDetails(productID);
@@ -119,8 +122,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("pid", productID);
-        cartMap.put("name", productName.getText().toString());
-        cartMap.put("price", Double.parseDouble(productPrice.getText().toString()));
+        cartMap.put("name", nameStr);
+        cartMap.put("price", priceDou);
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
         cartMap.put("quantity", Integer.parseInt( quantityBtn.getNumber()));
@@ -150,14 +153,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     Products products = dataSnapshot.getValue(Products.class);
 
                     checkQuantity(products.getQuantity());
+                    saveDetails(products);
 
                     Picasso.get().load(products.getImage()).into(productImage);
-                    productName.setText(products.getName());
-                    productDescription.setText(products.getDescription());
-                    productPrice.setText(String.valueOf(products.getPrice()));
-                    productSport.setText(products.getSport());
-                    productCategory.setText(products.getCategory());
-                    productSize.setText(products.getSize());
+                    productName.setText(nameStr);
+                    productDescription.setText("Description: " + descriptionStr);
+                    productPrice.setText("Price: " + priceDou + " RON");
+                    productSport.setText("Sport: " + sportStr);
+                    productCategory.setText("Category: " + categoryStr);
+                    productSize.setText("Size: " + sizeStr);
                     }
                 }
 
@@ -166,6 +170,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void saveDetails(Products products) {
+
+        nameStr = products.getName();
+        descriptionStr = products.getDescription();
+        priceDou = products.getPrice();
+        sportStr = products.getSport();
+        categoryStr = products.getCategory();
+        sizeStr = products.getSize();
     }
 
     private void checkQuantity(int quantity) {

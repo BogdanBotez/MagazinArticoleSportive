@@ -14,7 +14,7 @@ import com.example.magazinarticolesportive.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView txtProductName, txtProductDescription, txtProductPrice;
+    public TextView txtProductName, txtProductDescription, txtProductPrice, txtSize;
     public ImageView productImageView;
     public ItemClickListener listener;
 
@@ -25,6 +25,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements View.O
         txtProductName = itemView.findViewById(R.id.product_name);
         txtProductDescription = itemView.findViewById(R.id.product_description);
         txtProductPrice = itemView.findViewById(R.id.product_price);
+        txtSize = itemView.findViewById(R.id.product_size);
     }
 
     public void setItemClickListener(ItemClickListener listener){

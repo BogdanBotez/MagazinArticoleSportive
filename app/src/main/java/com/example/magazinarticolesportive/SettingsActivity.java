@@ -211,18 +211,21 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String image = dataSnapshot.child("image").getValue().toString();
+                    if (dataSnapshot.child("image").exists()) {
+                        String image = dataSnapshot.child("image").getValue().toString();
+
+                        Picasso.get().load(image).into(profileImageView);
+                    }else if(dataSnapshot.child("address").exists()) {
+                        String address = dataSnapshot.child("address").getValue().toString();
+                        addressEditText.setText(address);
+                    }
                     String name = dataSnapshot.child("name").getValue().toString();
                     String phone = dataSnapshot.child("phone").getValue().toString();
-                    String address = dataSnapshot.child("address").getValue().toString();
 
-                    Picasso.get().load(image).into(profileImageView);
                     nameEditText.setText(name);
                     phoneEditText.setText(phone);
-                    addressEditText.setText(address);
-
                 }
-            }
+                }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

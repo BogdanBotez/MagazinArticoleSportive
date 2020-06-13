@@ -96,17 +96,16 @@ public class LoginActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(phone))
         {
-            Toast.makeText(this,"Please write your phone...", Toast.LENGTH_SHORT).show();
+            InputPhone.setError("Type a valid phone number.");
         }
         else if(TextUtils.isEmpty(password))
         {
-            Toast.makeText(this, "Please write your password",Toast.LENGTH_SHORT).show();
+            InputPassword.setError("Type your password.");
         }
         else
         {
             loadingBar.setTitle("Logging in");
             loadingBar.setMessage("Please wait while we are checking the credentials");
-            //false =  nu dispare loadingBar-ul daca se apasa in afara lui
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
@@ -137,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(userData.getPassword().equals(password))
                         {
                             if(parentDbName.equals("Admins")){
-                                Toast.makeText(LoginActivity.this, "Admin logged in succesfully",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Admin logged in successfully.",Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
@@ -145,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                         else if(parentDbName.equals("Users")){
-                            Toast.makeText(LoginActivity.this, "User logged in successfully!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "User logged in successfully.",Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
 
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -155,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else
                         {
-                            Toast.makeText(LoginActivity.this, "The password is incorrect " ,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "The password is incorrect." ,Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
                         }
                     }

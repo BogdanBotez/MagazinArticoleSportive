@@ -4,82 +4,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".User.ConfirmOrderActivity"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".User.ConfirmOrderActivity">
 
 
     <TextView
         android:id="@+id/txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm shipping credentials."
-        android:textSize="22sp"
+        android:layout_marginTop="20dp"
         android:background="@color/background"
-        android:textColor="@android:color/black"
+        android:text="Confirm shipping credentials."
         android:textAlignment="center"
-        android:layout_marginTop="20dp"/>
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
 
     <EditText
         android:id="@+id/name_confirm_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/input_design"
+        android:padding="10dp"
         android:layout_below="@+id/txt"
-        android:layout_marginTop="60dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="20dp"
         android:hint="Name"
         android:textColor="@color/colorAccent"
-        android:textColorHint="@color/colorAccent"
-        />
+        android:textColorHint="@color/colorAccent" />
 
     <EditText
         android:id="@+id/phone_confirm_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/input_design"
+        android:padding="10dp"
         android:layout_below="@+id/name_confirm_order"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:hint="Phone"
         android:inputType="phone"
         android:textColor="@color/colorAccent"
-        android:textColorHint="@color/colorAccent"
-        />
+        android:textColorHint="@color/colorAccent" />
 
     <EditText
         android:id="@+id/address_confirm_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/input_design"
+        android:padding="10dp"
         android:layout_below="@+id/phone_confirm_order"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:hint="Address for shipping"
         android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent" />
+
+    <EditText
+        android:id="@+id/coupon_confirm_order"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_design"
+        android:padding="10dp"
+        android:layout_below="@id/address_confirm_order"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
+        android:hint="Type your coupon"
         />
+
+    <Button
+        android:id="@+id/apply_coupon_btn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/coupon_confirm_order"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/orange_button"
+        android:text="Apply coupon"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/total_price_confirm_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total price"
-        android:textSize="22sp"
         android:layout_above="@id/confirm_order_btn"
+        android:layout_marginTop="20dp"
         android:background="@color/background"
-        android:textColor="@android:color/black"
+        android:text="Total price"
         android:textAlignment="center"
-        android:layout_marginTop="20dp"/>
+        android:textColor="@android:color/black"
+        android:textSize="22sp" />
 
     <Button
         android:id="@+id/confirm_order_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/orange_button"
         android:text="Confirm"
         android:textColor="@android:color/white"
-        android:background="@drawable/orange_button"
-        android:layout_margin="15dp"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 </RelativeLayout>

@@ -27,6 +27,7 @@
         android:layout_marginTop="10dp"
         />
 
+
     <TextView
         android:id="@+id/product_description_details"
         android:layout_width="match_parent"
@@ -79,6 +80,18 @@
         android:layout_below="@+id/product_category_details"
         android:textColor="@color/colorAccent"
         android:text="Product Size"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/product_gender_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product_size_details"
+        android:textColor="@color/colorAccent"
+        android:text="Product Gender"
         android:textSize="16sp"
         android:gravity="center"
         android:layout_marginTop="8dp"
