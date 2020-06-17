@@ -1,6 +1,6 @@
-package com.example.magazinarticolesportive.Prevalent;
+package com.example.magazinarticolesportive.prevalent;
 
-import com.example.magazinarticolesportive.Model.Users;
+import com.example.magazinarticolesportive.models.Users;
 
 public class Prevalent {
     public static Users currentUser;

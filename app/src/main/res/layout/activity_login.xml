@@ -13,11 +13,11 @@
 
     <ImageView
         android:id="@+id/login_logo"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:src="@drawable/main_logo"
+        android:layout_width="366dp"
+        android:layout_height="179dp"
+        android:src="@drawable/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="80dp"
         />
 
     <EditText

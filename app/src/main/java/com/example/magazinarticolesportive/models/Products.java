@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.Model;
+package com.example.magazinarticolesportive.models;
 
 public class Products {
     private String category;
@@ -11,17 +11,8 @@ public class Products {
     private String time;
     private String gender;
     private String sport;
-    private String discount;
     private double price;
     private int quantity;
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
 
     public String getSport() {
         return sport;

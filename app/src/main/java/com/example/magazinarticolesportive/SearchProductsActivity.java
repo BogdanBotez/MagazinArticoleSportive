@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.magazinarticolesportive.Admin.AdminEditProductActivity;
-import com.example.magazinarticolesportive.Model.Products;
-import com.example.magazinarticolesportive.ViewHolder.ProductViewHolder;
+import com.example.magazinarticolesportive.admin.AdminEditProductActivity;
+import com.example.magazinarticolesportive.models.Products;
+import com.example.magazinarticolesportive.viewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;

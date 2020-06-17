@@ -16,10 +16,10 @@
         <activity android:name=".UserOrdersActivity" />
         <activity android:name=".UserCategoryActivity" />
         <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".Admin.AdminEditProductActivity" />
+        <activity android:name=".admin.AdminEditProductActivity" />
         <activity android:name=".SearchProductsActivity" />
         <activity android:name=".OrderDetailsActivity" />
-        <activity android:name=".Admin.AdminOrdersActivity" />
+        <activity android:name=".admin.AdminOrdersActivity" />
         <activity android:name=".User.ConfirmOrderActivity" />
         <activity android:name=".User.CartActivity" />
         <activity android:name=".ProductDetailsActivity" />
@@ -31,8 +31,8 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Admin.AdminCategoryActivity" />
-        <activity android:name=".Admin.AdminAddProductActivity" />
+        <activity android:name=".admin.AdminCategoryActivity" />
+        <activity android:name=".admin.AdminAddProductActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">

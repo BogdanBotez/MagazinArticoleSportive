@@ -17,13 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.HomeActivity;
-import com.example.magazinarticolesportive.Model.Cart;
-import com.example.magazinarticolesportive.Model.Wish;
-import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.models.Wish;
+import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.ProductDetailsActivity;
 import com.example.magazinarticolesportive.R;
-import com.example.magazinarticolesportive.ViewHolder.CartViewHolder;
-import com.example.magazinarticolesportive.ViewHolder.WishViewHolder;
+import com.example.magazinarticolesportive.viewHolder.WishViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -97,11 +95,11 @@ public class WishListActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int option) {
                                 if (option == 0) {
                                     Intent intent = new Intent(WishListActivity.this, ProductDetailsActivity.class);
-                                    intent.putExtra("pid", model.getpId());
+                                    intent.putExtra("pid", model.getPId());
                                     startActivity(intent);
                                 } else if (option == 1) {
                                     wishListRef.child(Prevalent.currentUser.getPhone()).child("Products")
-                                            .child(model.getpId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            .child(model.getPId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {

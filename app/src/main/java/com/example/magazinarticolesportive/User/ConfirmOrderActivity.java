@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.HomeActivity;
-import com.example.magazinarticolesportive.Model.Products;
-import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.models.Products;
+import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

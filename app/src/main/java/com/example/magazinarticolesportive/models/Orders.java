@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.Model;
+package com.example.magazinarticolesportive.models;
 
 public class Orders {
     private String address, phone, name, totalPrice, date, time;

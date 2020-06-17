@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.magazinarticolesportive.Model.Users;
-import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.models.Users;
+import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private String parentDbName = "Users";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -55,22 +54,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-     /*   String userPhone = Paper.book().read(Prevalent.userPhone);
+        String userPhone = Paper.book().read(Prevalent.userPhone);
         String userPassword = Paper.book().read(Prevalent.userPassword);
-        if(userPhone != "" && userPassword != "")
-        {
-            if(!TextUtils.isEmpty(userPhone) && !TextUtils.isEmpty(userPassword))
-            {
-                AllowAccess(userPhone, userPassword);
 
-                loadingBar.setTitle("Already Logged in");
-                loadingBar.setMessage("Please wait..");
-                loadingBar.setCanceledOnTouchOutside(false);
-                loadingBar.show();
+        if (!TextUtils.isEmpty(userPhone) && !TextUtils.isEmpty(userPassword)) {
+            AllowAccess(userPhone, userPassword);
+        }
 
-            }
-        }*/
     }
+
 
     private void AllowAccess(final String phone, final String password) {
         final DatabaseReference RootRef;
@@ -79,31 +71,24 @@ public class MainActivity extends AppCompatActivity {
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(parentDbName).child(phone).exists())
-                {
+                if (dataSnapshot.child(parentDbName).child(phone).exists()) {
                     Users userData = dataSnapshot.child(parentDbName).child(phone).getValue(Users.class);
 
-                    if(userData.getPhone().equals(phone))
-                    {
-                        if(userData.getPassword().equals(password))
-                        {
-                            Toast.makeText(MainActivity.this, "Already logged in!",Toast.LENGTH_SHORT).show();
+                    if (userData.getPhone().equals(phone)) {
+                        if (userData.getPassword().equals(password)) {
+                            Toast.makeText(MainActivity.this, "Already logged in!", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
 
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             Prevalent.currentUser = userData;
                             startActivity(intent);
-                        }
-                        else
-                        {
-                            Toast.makeText(MainActivity.this, "The password have been changed since the last login " ,Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "The password have been changed since the last login ", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
                         }
                     }
-                }
-                else
-                {
-                    Toast.makeText(MainActivity.this, "Account with the phone: " + phone + " do not exist anymore",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Account with the phone: " + phone + " do not exist anymore", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }

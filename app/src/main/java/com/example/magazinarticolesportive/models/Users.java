@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.Model;
+package com.example.magazinarticolesportive.models;
 
 public class Users {
     private String name, phone, password, image, address;

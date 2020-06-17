@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.magazinarticolesportive.Admin.AdminCategoryActivity;
-import com.example.magazinarticolesportive.Model.Users;
-import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.admin.AdminCategoryActivity;
+import com.example.magazinarticolesportive.models.Users;
+import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

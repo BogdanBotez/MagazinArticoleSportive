@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.HomeActivity;
-import com.example.magazinarticolesportive.Model.Cart;
-import com.example.magazinarticolesportive.Model.Products;
-import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.models.Cart;
+import com.example.magazinarticolesportive.models.Products;
+import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.ProductDetailsActivity;
 import com.example.magazinarticolesportive.R;
-import com.example.magazinarticolesportive.ViewHolder.CartViewHolder;
+import com.example.magazinarticolesportive.viewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,12 +33,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.jaredrummler.materialspinner.MaterialSpinner;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 

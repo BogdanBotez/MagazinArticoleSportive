@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.Model;
+package com.example.magazinarticolesportive.models;
 
 public class Wish {
 
@@ -12,11 +12,11 @@ public class Wish {
     public Wish() {
     }
 
-    public String getpId() {
+    public String getPId() {
         return pId;
     }
 
-    public void setpId(String pId) {
+    public void setPId(String pId) {
         this.pId = pId;
     }
 

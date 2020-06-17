@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.ViewHolder;
+package com.example.magazinarticolesportive.viewHolder;
 
 import android.view.View;
 import android.widget.TextView;
@@ -8,18 +8,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.magazinarticolesportive.Interface.ItemClickListener;
 import com.example.magazinarticolesportive.R;
 
-public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class WishViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView txtName, txtPrice, txtQuantity, txtTotalProductPrice;
+    public TextView txtName, txtSport, txtCategory, txtPrice;
     private ItemClickListener itemClickListener;
 
-    public CartViewHolder(View itemView) {
+    public WishViewHolder(View itemView) {
         super(itemView);
 
-        txtName = itemView.findViewById(R.id.product_name_cart);
-        txtPrice = itemView.findViewById(R.id.product_price_cart);
-        txtQuantity = itemView.findViewById(R.id.product_quantity_cart);
-        txtTotalProductPrice = itemView.findViewById(R.id.product_total_price_cart);
+        txtName = itemView.findViewById(R.id.product_name_wish);
+        txtPrice = itemView.findViewById(R.id.product_price_wish);
+        txtSport = itemView.findViewById(R.id.product_sport_wish);
+        txtCategory = itemView.findViewById(R.id.product_category_wish);
 
     }
 

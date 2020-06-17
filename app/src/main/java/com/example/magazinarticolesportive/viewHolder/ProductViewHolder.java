@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.ViewHolder;
+package com.example.magazinarticolesportive.viewHolder;
 
 import android.view.View;
 import android.widget.ImageView;

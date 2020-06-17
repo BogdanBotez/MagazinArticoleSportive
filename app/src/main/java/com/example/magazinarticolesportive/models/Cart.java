@@ -1,8 +1,8 @@
-package com.example.magazinarticolesportive.Model;
+package com.example.magazinarticolesportive.models;
 
 public class Cart {
 
-    private String pid, name, discount;
+    private String pid, name;
     private double price;
     private int quantity;
 
@@ -27,15 +27,6 @@ public class Cart {
     }
 
 
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -52,10 +43,9 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public Cart(String pid, String name, String discount, double price, int quantity) {
+    public Cart(String pid, String name, double price, int quantity) {
         this.pid = pid;
         this.name = name;
-        this.discount = discount;
         this.price = price;
         this.quantity = quantity;
     }

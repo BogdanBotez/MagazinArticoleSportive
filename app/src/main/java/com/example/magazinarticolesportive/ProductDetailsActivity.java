@@ -12,9 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.example.magazinarticolesportive.Model.Products;
-import com.example.magazinarticolesportive.Prevalent.Prevalent;
-import com.example.magazinarticolesportive.User.WishListActivity;
+import com.example.magazinarticolesportive.models.Products;
+import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -125,9 +124,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("date", saveCurrentDate);
         cartMap.put("time", saveCurrentTime);
         cartMap.put("quantity", Integer.parseInt( quantityBtn.getNumber()));
-        cartMap.put("discount", "");
 
-        //adaugarea in lista a produselor
         cartListRef.child("User View").child(Prevalent.currentUser.getPhone()).child("Products")
                 .child(productID).updateChildren(cartMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -140,7 +137,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                             }
                                         }
                 });
-
 
     }
 

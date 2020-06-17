@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.Admin;
+package com.example.magazinarticolesportive.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 

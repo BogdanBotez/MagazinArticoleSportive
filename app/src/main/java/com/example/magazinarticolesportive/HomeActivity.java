@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.magazinarticolesportive.Admin.AdminEditProductActivity;
-import com.example.magazinarticolesportive.Model.Products;
-import com.example.magazinarticolesportive.Prevalent.Prevalent;
+import com.example.magazinarticolesportive.admin.AdminEditProductActivity;
+import com.example.magazinarticolesportive.models.Products;
+import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.User.CartActivity;
 import com.example.magazinarticolesportive.User.WishListActivity;
-import com.example.magazinarticolesportive.ViewHolder.ProductViewHolder;
+import com.example.magazinarticolesportive.viewHolder.ProductViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -45,13 +45,14 @@ import io.paperdb.Paper;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DatabaseReference ProductReference;
+    private DatabaseReference productReference;
     private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
     private String type = "";
     private String category = "all";
     private String searchCategory = "";
+    private FirebaseRecyclerOptions<Products> options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class HomeActivity extends AppCompatActivity
             type = getIntent().getExtras().get("admin").toString();
         }
 
-        ProductReference = FirebaseDatabase.getInstance().getReference().child("Products");
+        productReference = FirebaseDatabase.getInstance().getReference().child("Products");
 
         Paper.init(this);
 
@@ -115,56 +116,17 @@ public class HomeActivity extends AppCompatActivity
         super.onStart();
 
         if (category.equals("all")) {
-            FirebaseRecyclerOptions<Products> options =
-                    new FirebaseRecyclerOptions.Builder<Products>()
-                            .setQuery(ProductReference, Products.class)
+
+            options = new FirebaseRecyclerOptions.Builder<Products>()
+                            .setQuery(productReference, Products.class)
                             .build();
-
-
-            FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
-                    new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
-                        @Override
-                        protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
-                            holder.txtProductName.setText(model.getName());
-                            holder.txtProductDescription.setText(model.getDescription());
-                            holder.txtProductPrice.setText("Price = " + model.getPrice() + "RON");
-                            Picasso.get().load(model.getImage()).into(holder.productImageView);
-
-
-                            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                    if (type.equals("admin")) {
-                                        Intent intent = new Intent(HomeActivity.this, AdminEditProductActivity.class);
-                                        intent.putExtra("pid", model.getPid());
-                                        startActivity(intent);
-
-                                    } else {
-                                        Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
-                                        intent.putExtra("pid", model.getPid());
-                                        startActivity(intent);
-                                    }
-                                }
-                            });
-                        }
-
-                        @NonNull
-                        @Override
-                        public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.products_layout, parent, false);
-                            ProductViewHolder holder = new ProductViewHolder(v);
-                            return holder;
-                        }
-                    };
-
-            recyclerView.setAdapter(adapter);
-            adapter.startListening();
         } else {
-            FirebaseRecyclerOptions<Products> options =
+            options =
                     new FirebaseRecyclerOptions.Builder<Products>()
-                            .setQuery(ProductReference.orderByChild("category").startAt(category).endAt(category), Products.class)
+                            .setQuery(productReference.orderByChild("category").startAt(category).endAt(category), Products.class)
                             .build();
+        }
+
 
             FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
                     new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
@@ -206,7 +168,7 @@ public class HomeActivity extends AppCompatActivity
             recyclerView.setAdapter(adapter);
             adapter.startListening();
         }
-    }
+
 
     public void OnBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -237,7 +199,6 @@ public class HomeActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO scoate settings, cart
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -327,8 +288,6 @@ public class HomeActivity extends AppCompatActivity
         builder.show();
 
     }
-
-
 
     private void applyCategory() {
 
