@@ -134,10 +134,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         final String saveCurrentDate, saveCurrentTime;
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("DD MM YYYY");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd MM yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:MM:SS");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
         String orderID = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentUser.getPhone()).push().getKey();
@@ -161,7 +161,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     moveProductsToOrder(
                             FirebaseDatabase.getInstance().getReference().child("Cart List")
-                                    .child("User View")
                                     .child(Prevalent.currentUser.getPhone()).child("Products"),
                             ordersRef.child("Products")
                     );
@@ -207,7 +206,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         final DatabaseReference cartListRef =
                 FirebaseDatabase.getInstance().getReference()
                         .child("Cart List")
-                        .child("User View")
                         .child(Prevalent.currentUser.getPhone())
                         .child("Products");
 

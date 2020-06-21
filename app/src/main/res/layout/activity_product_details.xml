@@ -107,7 +107,7 @@
         app:finalNumber="10"
         android:layout_centerHorizontal="true"
         app:backGroundColor="@color/colorPrimaryDark"
-        android:layout_below="@+id/product_size_details"
+        android:layout_below="@+id/product_gender_details"
         android:layout_marginTop="10dp"
         >
     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>

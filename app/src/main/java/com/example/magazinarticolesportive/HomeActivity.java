@@ -235,6 +235,11 @@ public class HomeActivity extends AppCompatActivity
                 Intent intent = new Intent(HomeActivity.this, WishListActivity.class);
                 startActivity(intent);
             }
+        } else if (id == R.id.nav_coupons) {
+            if (!type.equals("admin")) {
+                Intent intent = new Intent(HomeActivity.this, CouponsActivity.class);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_logout) {
             Paper.book().destroy();
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);

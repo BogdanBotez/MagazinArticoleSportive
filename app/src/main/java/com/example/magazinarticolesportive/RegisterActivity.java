@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;
@@ -53,15 +56,14 @@ public class RegisterActivity extends AppCompatActivity {
         String phone = InputPhone.getText().toString();
         String password = InputPassword.getText().toString();
 
-        if(TextUtils.isEmpty(name)){
+        if(TextUtils.isEmpty(name) || !(name.matches("[a-zA-Z ]*"))){
             InputName.setError("Please type your name.");
         }
-
         else if(TextUtils.isEmpty(phone) || phone.length() < 10){
             InputPhone.setError("Please type a valid phone number.");
         }
-        else if(TextUtils.isEmpty(password)){
-            InputPassword.setError("Please type a password.");
+        else if(TextUtils.isEmpty(password) || password.length() < 8){
+            InputPassword.setError("The password must contain at least 8 characters.");
         }
         else
         {
@@ -112,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Toast.makeText(RegisterActivity.this, "This " + phone + " already exists.", Toast.LENGTH_SHORT);
+                    Toast.makeText(RegisterActivity.this, "An account with this phone number already exists.", Toast.LENGTH_SHORT);
                     loadingBar.dismiss();
                     Toast.makeText(RegisterActivity.this, "Try again using another phone.", Toast.LENGTH_SHORT);
 

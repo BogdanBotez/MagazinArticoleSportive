@@ -11,11 +11,12 @@
 
     <ImageView
         android:id="@+id/register_logo"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:src="@drawable/main_logo"
+        android:layout_width="366dp"
+        android:layout_height="179dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/logo"
         />
 
     <EditText
@@ -28,7 +29,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:hint="Name"
-        android:inputType="textEmailAddress"
+        android:inputType="textPersonName"
         android:textColorHint="@color/colorAccent"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
@@ -82,8 +83,8 @@
         android:background="@drawable/blue_button"
         android:padding="17dp"
         android:textAllCaps="false"
-        android:textSize="17sp"
-        android:text="Create account"
+        android:textSize="20sp"
+        android:text="Sign up"
         android:textColor="@color/colorAccent"
         />
 

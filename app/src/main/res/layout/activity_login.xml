@@ -17,7 +17,8 @@
         android:layout_height="179dp"
         android:src="@drawable/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
         />
 
     <EditText
@@ -102,8 +103,8 @@
         android:background="@drawable/blue_button"
         android:padding="17dp"
         android:textAllCaps="false"
-        android:textSize="17sp"
-        android:text="Login"
+        android:textSize="20sp"
+        android:text="Log in"
         android:textColor="@color/colorAccent"
         />
 

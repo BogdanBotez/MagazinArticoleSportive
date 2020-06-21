@@ -83,10 +83,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         final HashMap<String, Object> wishMap = new HashMap<>();
         wishMap.put("pid", productID);
-        wishMap.put("name", productName.getText().toString());
-        wishMap.put("price", Double.parseDouble(productPrice.getText().toString()));
-        wishMap.put("category", productCategory.getText().toString());
-        wishMap.put("sport", productSport.getText().toString());
+        wishMap.put("name", nameStr);
+        wishMap.put("price", priceDou);
+        wishMap.put("category", categoryStr);
+        wishMap.put("sport", sportStr);
 
         wishListRef.child(Prevalent.currentUser.getPhone())
                 .child("Products").child(productID).updateChildren(wishMap)
@@ -109,14 +109,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void addToCartList() {
-        String saveCurrentTime, saveCurrentDate;
+/*        String saveCurrentTime, saveCurrentDate;
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("dd MM yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
-        saveCurrentTime = currentTime.format(calendar.getTime());
+        saveCurrentTime = currentTime.format(calendar.getTime());*/
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
@@ -124,11 +124,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         cartMap.put("pid", productID);
         cartMap.put("name", nameStr);
         cartMap.put("price", priceDou);
-        cartMap.put("date", saveCurrentDate);
-        cartMap.put("time", saveCurrentTime);
-        cartMap.put("quantity", Integer.parseInt( quantityBtn.getNumber()));
+        cartMap.put("quantity", Integer.parseInt(quantityBtn.getNumber()));
 
-        cartListRef.child("User View").child(Prevalent.currentUser.getPhone()).child("Products")
+        cartListRef.child(Prevalent.currentUser.getPhone()).child("Products")
                 .child(productID).updateChildren(cartMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -162,6 +160,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     productSport.setText("Sport: " + sportStr);
                     productCategory.setText("Category: " + categoryStr);
                     productSize.setText("Size: " + sizeStr);
+                    productGender.setText("Gender: " + products.getGender());
                     }
                 }
 

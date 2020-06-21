@@ -55,7 +55,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "tops");
+                intent.putExtra("category", "Tops");
                 startActivity(intent);
             }
         });
@@ -64,7 +64,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "pants");
+                intent.putExtra("category", "Pants");
                 startActivity(intent);
             }
         });
@@ -73,7 +73,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "shoes");
+                intent.putExtra("category", "Footwear");
                 startActivity(intent);
             }
         });

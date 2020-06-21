@@ -83,7 +83,7 @@ public class CartActivity extends AppCompatActivity {
 
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
-                        .setQuery(cartListRef.child("User View")
+                        .setQuery(cartListRef
                                 .child(Prevalent.currentUser.getPhone())
                                 .child("Products"), Cart.class).build();
         FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
@@ -116,7 +116,7 @@ public class CartActivity extends AppCompatActivity {
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
                                 } else if (option == 1) {
-                                    cartListRef.child("User View").child(Prevalent.currentUser.getPhone()).child("Products")
+                                    cartListRef.child(Prevalent.currentUser.getPhone()).child("Products")
                                             .child(model.getPid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -152,7 +152,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void CheckProductQuantity() {
 
-        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child("User View").child(Prevalent.currentUser.getPhone()).child("Products");
+        final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child(Prevalent.currentUser.getPhone()).child("Products");
         final DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
 
