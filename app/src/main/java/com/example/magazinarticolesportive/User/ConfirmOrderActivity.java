@@ -36,6 +36,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private Button confirmOrderBtn, applyCouponBtn;
     private String totalPrice = "", couponStr = "";
     private String totalPriceDisc = "";
+    private String couponId = "";
     private boolean isDiscountable = true;
     private DatabaseReference couponsRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentUser.getPhone()).child("Coupons");
 
@@ -83,11 +84,15 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     private void applyCoupon() {
 
-        couponsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        //Todo salveaza cupoanele intr-o lista dupa care treci prin toate si verifica daca exista
+        couponsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(couponEditText.getText().toString().toUpperCase()).exists()){
-                    double discount = dataSnapshot.child(couponEditText.getText().toString().toUpperCase()).getValue(Double.class);
+                if(dataSnapshot.exists())
+                    /* asd = dataSnapshot.getValue();*/
+                if(dataSnapshot.child(couponsRef.push().getKey()).child("name").getValue().equals(couponEditText.getText().toString().toUpperCase())){
+                    couponId = dataSnapshot.child(couponsRef.push().getKey()).toString();
+                    double discount = dataSnapshot.child(couponsRef.push().getKey()).child("value").getValue(Double.class);
                     double totalPriceDiscount = Double.parseDouble(totalPrice) * ((100-discount)/100);
                     totalPriceDisc = String.valueOf(totalPriceDiscount);
                     totalPriceTxt.setText("Total Price: " + totalPriceDiscount + " RON");
@@ -165,7 +170,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                             ordersRef.child("Products")
                     );
                     if(!isDiscountable) {
-                        deleteCoupon();
+                        deleteCoupon(couponId);
                     }else {
                         addCoupon(Double.parseDouble(totalPrice));
                     }
@@ -184,18 +189,21 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private void addCoupon(double price) {
         HashMap<String, Object> couponMap = new HashMap<>();
         if(price >= 2000){
-            couponMap.put("EXTRA20", 20);
+            couponMap.put("name", "EXTRA20");
+            couponMap.put("value", 20);
         }else if(price >= 1500){
-            couponMap.put("EXTRA15", 15);
+            couponMap.put("name", "EXTRA15");
+            couponMap.put("value", 15);
         }else if(price >= 1000){
-            couponMap.put("EXTRA10", 10);
+            couponMap.put("name", "EXTRA10");
+            couponMap.put("value", 10);
         }
-        couponsRef.updateChildren(couponMap);
+        couponsRef.push().updateChildren(couponMap);
 
     }
 
-    private void deleteCoupon() {
-        couponsRef.child(couponStr.toUpperCase()).removeValue();
+    private void deleteCoupon(String couponId) {
+        couponsRef.child(couponId).child(couponStr.toUpperCase()).removeValue();
     }
 
     private void updateQuantity() {

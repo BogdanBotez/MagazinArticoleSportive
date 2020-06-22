@@ -14,7 +14,7 @@ import com.example.magazinarticolesportive.R;
 
 public class AdminCategoryActivity extends AppCompatActivity {
 
-    private ImageView tops, pants, shoes, sportEquipment;
+    private ImageView tops, pants, shoes, equipment;
 
     private Button logoutBtn, editProductBtn;
 
@@ -48,7 +48,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         tops = findViewById(R.id.tops);
         pants = findViewById(R.id.pants);
         shoes = findViewById(R.id.shoes);
-        sportEquipment = findViewById(R.id.sport_equipment);
+        equipment = findViewById(R.id.sport_equipment);
 
 
         tops.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +79,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
         });
 
 
-        sportEquipment.setOnClickListener(new View.OnClickListener() {
+        equipment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);

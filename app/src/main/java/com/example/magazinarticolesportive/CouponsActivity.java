@@ -21,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CouponsActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private RecyclerView couponsList;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -29,10 +29,10 @@ public class CouponsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupons);
 
-        recyclerView = findViewById(R.id.coupons_list);
-        recyclerView.setHasFixedSize(true);
+
+        couponsList = findViewById(R.id.coupons_list);
         layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        couponsList.setLayoutManager(layoutManager);
 
     }
 
@@ -50,22 +50,18 @@ public class CouponsActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull CouponsViewHolder holder, int position, @NonNull Coupons model) {
                 holder.couponName.setText(model.getName());
-                holder.couponValue.setText(model.getValue());
+                holder.couponValue.setText(String.valueOf(model.getValue()));
             }
 
             @NonNull
             @Override
             public CouponsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_items_layout, parent, false);
-                CouponsViewHolder holder = new CouponsViewHolder(v);
-                return holder;
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.coupons_layout, parent, false);
+                return new CouponsViewHolder(v);
             }
         };
-        recyclerView.setAdapter(adapter);
+        couponsList.setAdapter(adapter);
         adapter.startListening();
-        {
 
-
-        }
     }
 }

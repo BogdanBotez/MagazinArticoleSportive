@@ -11,7 +11,6 @@
     tools:context=".admin.AdminEditProductActivity">
 
     <RelativeLayout
-        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,10 +22,8 @@
         android:padding="8dp"
         android:layout_margin="5dp"
         android:background="@drawable/input_design"
-        android:textColorHint="@color/colorAccent"
         android:textSize="20sp"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
         android:textStyle="bold"
 
         />
@@ -48,11 +45,10 @@
         android:padding="8dp"
         android:layout_margin="5dp"
         android:background="@drawable/input_design"
-        android:textColorHint="@color/colorAccent"
         android:textSize="18sp"
         android:layout_below="@id/product_image_edit"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
+
         android:inputType="numberDecimal"
         android:textStyle="bold"
         />
@@ -62,14 +58,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Product quantity add"
-        android:textColorHint="@color/colorAccent"
         android:padding="8dp"
         android:layout_margin="5dp"
         android:background="@drawable/input_design"
         android:textSize="18sp"
         android:layout_below="@id/product_price_edit"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         />
 
@@ -80,7 +74,6 @@
         android:background="@color/colorPrimaryDark"
         android:layout_below="@id/product_quantity_edit"
         android:layout_margin="5dp"
-        android:textColor="@color/colorAccent"
         android:text="Save"
         />
 
@@ -92,7 +85,6 @@
         android:layout_below="@id/product_quantity_edit"
         android:layout_margin="5dp"
         android:layout_toRightOf="@id/save_product_edit_btn"
-        android:textColor="@color/colorAccent"
         android:text="Delete"
         />
 

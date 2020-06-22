@@ -101,10 +101,10 @@ public class HomeActivity extends AppCompatActivity
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
-        if (!type.equals("admin")) {
+        /*if (!type.equals("admin")) {
             userNameTextView.setText(Prevalent.currentUser.getName());
             Picasso.get().load(Prevalent.currentUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
-        }
+        }*/
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -259,6 +259,7 @@ public class HomeActivity extends AppCompatActivity
         builder.setTitle("Choose the category you want to search.");
         final MaterialSpinner categorySpinner = new MaterialSpinner(HomeActivity.this);
         builder.setView(categorySpinner);
+        categorySpinner.setDropdownHeight(1400);
         categorySpinner.setItems("", "name", "sport", "size", "gender");
         categorySpinner.setTextColor(Color.BLACK);
         categorySpinner.setArrowColor(Color.BLACK);
@@ -269,6 +270,7 @@ public class HomeActivity extends AppCompatActivity
                 searchCategory = item.toString();
             }
         });
+
 
         builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
             @Override

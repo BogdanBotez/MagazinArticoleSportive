@@ -9,7 +9,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         tools:context=".admin.AdminAddProductActivity">
 
 
@@ -21,7 +20,7 @@
             android:layout_marginTop="40dp"
             android:cropToPadding="false"
             android:scaleType="centerCrop"
-            android:src="@drawable/add_image_product" />
+            android:src="@drawable/add_photo" />
 
         <EditText
             android:id="@+id/product_name"
@@ -35,8 +34,7 @@
             android:hint="Enter product's name"
             android:inputType="textMultiLine"
             android:padding="20dp"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent" />
+            />
 
         <EditText
             android:id="@+id/product_description"
@@ -49,9 +47,7 @@
             android:background="@drawable/input_design"
             android:hint="Enter product's description"
             android:inputType="textMultiLine"
-            android:padding="20dp"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent" />
+            android:padding="20dp" />
 
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:id="@+id/gender_spinner"
@@ -61,7 +57,6 @@
             app:ms_background_color="@color/colorPrimary"
             android:padding="12dp"
             android:textSize="16dp"
-            android:textColor="@color/colorAccent"
             android:layout_marginRight="45dp"
             android:layout_marginLeft="45dp"
             android:layout_marginTop="8dp"
@@ -78,9 +73,7 @@
             android:background="@drawable/input_design"
             android:hint="Enter product's price"
             android:inputType="numberDecimal"
-            android:padding="20dp"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent" />
+            android:padding="20dp" />
 
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:id="@+id/sport_spinner"
@@ -90,7 +83,6 @@
             app:ms_background_color="@color/colorPrimary"
             android:padding="12dp"
             android:textSize="16dp"
-            android:textColor="@color/colorAccent"
             android:layout_marginRight="45dp"
             android:layout_marginLeft="45dp"
             android:layout_marginTop="8dp"
@@ -107,9 +99,7 @@
             android:background="@drawable/input_design"
             android:hint="Enter product's size"
             android:inputType="text"
-            android:padding="20dp"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent" />
+            android:padding="20dp" />
 
         <EditText
             android:id="@+id/product_quantity"
@@ -122,9 +112,7 @@
             android:background="@drawable/input_design"
             android:hint="Enter the quantity"
             android:inputType="number"
-            android:padding="20dp"
-            android:textColor="@color/colorAccent"
-            android:textColorHint="@color/colorAccent" />
+            android:padding="20dp" />
 
 
         <Button
@@ -139,7 +127,7 @@
             android:background="@drawable/blue_button"
             android:padding="17dp"
             android:text="Add Product"
-            android:textColor="@color/colorAccent" />
+/>
 
     </RelativeLayout>
 

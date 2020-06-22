@@ -2,7 +2,21 @@ package com.example.magazinarticolesportive.models;
 
 public class Coupons {
 
-    private String name, value;
+    private String name;
+    private double value;
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public Coupons(String name, double value) {
+        this.name = name;
+        this.value = value;
+    }
 
     public String getName() {
         return name;
@@ -12,19 +26,7 @@ public class Coupons {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
     public Coupons() {
     }
 
-    public Coupons(String name, String value) {
-        this.name = name;
-        this.value = value;
-    }
 }

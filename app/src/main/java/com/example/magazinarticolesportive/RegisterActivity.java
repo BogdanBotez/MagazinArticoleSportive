@@ -133,7 +133,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void addCoupon(DatabaseReference rootRef, String phone) {
         HashMap<String, Object> userCouponsMap = new HashMap<>();
-        userCouponsMap.put("new", 10);
-        rootRef.child("Users").child(phone).child("Coupons").updateChildren(userCouponsMap);
+        userCouponsMap.put("name", "NEW10");
+        userCouponsMap.put("value", 10);
+        rootRef.child("Users").child(phone).child("Coupons").push().updateChildren(userCouponsMap);
     }
 }
