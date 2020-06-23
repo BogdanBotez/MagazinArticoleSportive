@@ -114,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/settings_address"
-        android:text="Set security question"
+        android:text="Set security answer"
         android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
         android:background="@color/colorPrimaryDark"

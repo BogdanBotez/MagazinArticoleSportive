@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
     private CircleImageView profileImageView;
     private EditText nameEditText, phoneEditText, addressEditText;
     private TextView imageChangeTextBtn, closeTextBtn, updateTextBtn;
-    private Button securityQuestionBtn;
+    private Button securityAnswerBtn;
 
     private Uri imageUri;
     private String myUrl = "";
@@ -61,7 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
         imageChangeTextBtn = findViewById(R.id.change_profile_image);
         closeTextBtn = findViewById(R.id.close_settings_btn);
         updateTextBtn = findViewById(R.id.update_settings_btn);
-        securityQuestionBtn = findViewById(R.id.security_question_settings_btn);
+        securityAnswerBtn = findViewById(R.id.security_question_settings_btn);
 
         userInfoDisplay(profileImageView, nameEditText, phoneEditText, addressEditText);
 
@@ -97,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        securityQuestionBtn.setOnClickListener(new View.OnClickListener() {
+        securityAnswerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingsActivity.this, ResetPasswordActivity.class);

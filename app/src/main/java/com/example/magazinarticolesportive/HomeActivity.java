@@ -101,10 +101,10 @@ public class HomeActivity extends AppCompatActivity
         TextView userNameTextView = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
-        /*if (!type.equals("admin")) {
+        if (!type.equals("admin")) {
             userNameTextView.setText(Prevalent.currentUser.getName());
             Picasso.get().load(Prevalent.currentUser.getImage()).placeholder(R.drawable.profile).into(profileImageView);
-        }*/
+        }
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -256,7 +256,7 @@ public class HomeActivity extends AppCompatActivity
     private void getSearchCategory() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-        builder.setTitle("Choose the category you want to search.");
+        builder.setTitle("Choose the category you want to search by.");
         final MaterialSpinner categorySpinner = new MaterialSpinner(HomeActivity.this);
         builder.setView(categorySpinner);
         categorySpinner.setDropdownHeight(1400);
@@ -301,7 +301,7 @@ public class HomeActivity extends AppCompatActivity
     private void applyCategory() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
-        builder.setTitle("Choose the category you want");
+        builder.setTitle("Choose the category you want.");
         final MaterialSpinner categorySpinner = new MaterialSpinner(HomeActivity.this);
         builder.setView(categorySpinner);
         categorySpinner.setItems("", "all", "tops", "pants", "shoes", "equipment");

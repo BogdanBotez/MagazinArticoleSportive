@@ -49,8 +49,8 @@ public class CouponsActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Coupons, CouponsViewHolder> adapter = new FirebaseRecyclerAdapter<Coupons, CouponsViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CouponsViewHolder holder, int position, @NonNull Coupons model) {
-                holder.couponName.setText(model.getName());
-                holder.couponValue.setText(String.valueOf(model.getValue()));
+                holder.couponName.setText("Name: " + model.getName());
+                holder.couponValue.setText("Discount: " + model.getValue() + "%");
             }
 
             @NonNull

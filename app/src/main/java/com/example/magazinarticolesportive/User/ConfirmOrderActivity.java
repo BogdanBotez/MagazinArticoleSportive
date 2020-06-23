@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.HomeActivity;
+import com.example.magazinarticolesportive.models.Coupons;
 import com.example.magazinarticolesportive.models.Products;
 import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.R;
@@ -34,7 +35,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private EditText nameEditText, phoneEditText, addressEditText, couponEditText;
     private TextView totalPriceTxt;
     private Button confirmOrderBtn, applyCouponBtn;
-    private String totalPrice = "", couponStr = "";
+    private String totalPrice = "";
     private String totalPriceDisc = "";
     private String couponId = "";
     private boolean isDiscountable = true;
@@ -88,23 +89,27 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         couponsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists())
-                    /* asd = dataSnapshot.getValue();*/
-                if(dataSnapshot.child(couponsRef.push().getKey()).child("name").getValue().equals(couponEditText.getText().toString().toUpperCase())){
-                    couponId = dataSnapshot.child(couponsRef.push().getKey()).toString();
-                    double discount = dataSnapshot.child(couponsRef.push().getKey()).child("value").getValue(Double.class);
-                    double totalPriceDiscount = Double.parseDouble(totalPrice) * ((100-discount)/100);
-                    totalPriceDisc = String.valueOf(totalPriceDiscount);
-                    totalPriceTxt.setText("Total Price: " + totalPriceDiscount + " RON");
-                    couponStr = couponEditText.getText().toString();
-                    isDiscountable = false;
-                    applyCouponBtn.setText("remove coupon");
-                    Toast.makeText(ConfirmOrderActivity.this, "Coupon applied successfully.", Toast.LENGTH_SHORT).show();
-                }else{
+                for (DataSnapshot couponsListSnapshot : dataSnapshot.getChildren()) {
+                    Coupons couponSnapshot = couponsListSnapshot.getValue(Coupons.class);
+                    if (couponSnapshot.getName().equals(couponEditText.getText().toString().toUpperCase())) {
+                        couponId = couponsListSnapshot.getKey();
+                        double discount = couponSnapshot.getValue();
+                        double totalPriceDiscount = Double.parseDouble(totalPrice) * ((100 - discount) / 100);
+                        totalPriceDisc = String.valueOf(totalPriceDiscount);
+                        totalPriceTxt.setText("Total Price: " + totalPriceDiscount + " RON");
+                        isDiscountable = false;
+                        applyCouponBtn.setText("remove coupon");
+                        break;
+                    }
+
+                }
+                if(isDiscountable) {
                     couponEditText.setError("The coupon doesn't exist");
                 }
+                else{
+                    Toast.makeText(ConfirmOrderActivity.this, "Coupon applied successfully.", Toast.LENGTH_SHORT).show();
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -203,7 +208,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     }
 
     private void deleteCoupon(String couponId) {
-        couponsRef.child(couponId).child(couponStr.toUpperCase()).removeValue();
+        couponsRef.child(couponId).removeValue();
     }
 
     private void updateQuantity() {

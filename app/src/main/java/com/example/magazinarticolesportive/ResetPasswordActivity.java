@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
-    private TextView pageTitle, question, questionTitle;
+    private TextView pageTitle, questionTitle;
     private EditText phoneNumber, answerInput;
     private Button verifyBtn;
     private String check = "";
@@ -42,7 +43,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
         phoneNumber = findViewById(R.id.phone_number_reset);
         pageTitle = findViewById(R.id.title_reset);
         questionTitle = findViewById(R.id.question_title_reset);
-        question = findViewById(R.id.question_reset);
         answerInput = findViewById(R.id.answer_reset);
         verifyBtn = findViewById(R.id.verify_reset_btn);
 
@@ -55,7 +55,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         phoneNumber.setVisibility(View.GONE);
         if (check.equals("settings")) {
-            pageTitle.setText("Set questions");
+            pageTitle.setText("Security security answer");
             questionTitle.setText("Set an answer for the next security question");
             verifyBtn.setText("Set");
 
@@ -152,7 +152,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         String answer = answerInput.getText().toString().toLowerCase();
 
         if (answer.equals("")) {
-            Toast.makeText(ResetPasswordActivity.this, "Please enter your answer", Toast.LENGTH_SHORT).show();
+            answerInput.setError("Please type your answer");
         } else {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users")
                     .child(Prevalent.currentUser.getPhone());
