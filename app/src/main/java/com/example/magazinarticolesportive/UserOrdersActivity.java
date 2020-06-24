@@ -40,7 +40,6 @@ public class UserOrdersActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //setez un query cu ajut RecyclerOptions
         FirebaseRecyclerOptions<Orders> options = new FirebaseRecyclerOptions.Builder<Orders>()
                 .setQuery(ordersRef, Orders.class).build();
         FirebaseRecyclerAdapter<Orders, OrdersViewHolder> adapter =

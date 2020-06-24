@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.magazinarticolesportive.models.Cart;
+import com.example.magazinarticolesportive.models.Products;
 import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.viewHolder.CartViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -49,12 +49,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>()
-                .setQuery(ordersRef, Cart.class).build();
+        FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>()
+                .setQuery(ordersRef, Products.class).build();
 
-        FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
+        FirebaseRecyclerAdapter<Products, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Products, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Cart model) {
+            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull Products model) {
                 holder.txtQuantity.setText("Quantity =" + model.getQuantity());
                 holder.txtName.setText(model.getName());
                 holder.txtPrice.setText("Price = " + model.getPrice());

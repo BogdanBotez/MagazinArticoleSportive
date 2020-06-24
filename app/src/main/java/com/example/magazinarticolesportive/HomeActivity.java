@@ -59,7 +59,6 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //verifica daca exista un intent precedent ( in cazul de fata daca vine din AdminCategActiv) si doar in cazul acela schimba type
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {

@@ -1,4 +1,3 @@
-//TODO chestia cu comenzile multiple
 package com.example.magazinarticolesportive.User;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.HomeActivity;
-import com.example.magazinarticolesportive.models.Cart;
 import com.example.magazinarticolesportive.models.Products;
 import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.ProductDetailsActivity;
@@ -81,14 +79,14 @@ public class CartActivity extends AppCompatActivity {
 
         CheckProductQuantity();
 
-        FirebaseRecyclerOptions<Cart> options =
-                new FirebaseRecyclerOptions.Builder<Cart>()
+        FirebaseRecyclerOptions<Products> options =
+                new FirebaseRecyclerOptions.Builder<Products>()
                         .setQuery(cartListRef
                                 .child(Prevalent.currentUser.getPhone())
-                                .child("Products"), Cart.class).build();
-        FirebaseRecyclerAdapter<Cart, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Cart, CartViewHolder>(options) {
+                                .child("Products"), Products.class).build();
+        FirebaseRecyclerAdapter<Products, CartViewHolder> adapter = new FirebaseRecyclerAdapter<Products, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Cart model) {
+            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull final Products model) {
                 holder.txtQuantity.setText("Quantity =" + model.getQuantity());
                 holder.txtName.setText(model.getName());
                 holder.txtPrice.setText("Price = " + model.getPrice());
@@ -97,7 +95,6 @@ public class CartActivity extends AppCompatActivity {
                 totalPrice += productPrice;
                 txtTotalPrice.setText("Total price = " + totalPrice);
 
-                //Cand se apasa pe un produs
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

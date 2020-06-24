@@ -32,8 +32,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private TextView AdminLink, UserLink, forgotPasswordLink;
 
-    //private String adminsDbName = "Admins";
-    //private String usersDbName = "Users";
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe;
 

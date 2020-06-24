@@ -37,17 +37,24 @@ public class Products {
         this.quantity = quantity;
     }
 
-    public Products(String date, int quantity, double price, String name, String discount, String pid,  String time) {
-        this.date = date;
+    public Products(int quantity, double price, String name, String pid) {
+
         this.name = name;
         this.pid = pid;
-        this.time = time;
         this.price = price;
         this.quantity = quantity;
     }
 
     public Products(){
 
+    }
+
+    public Products(String category, String name, String pid, String sport, double price) {
+        this.category = category;
+        this.name = name;
+        this.pid = pid;
+        this.sport = sport;
+        this.price = price;
     }
 
     public String getCategory() {

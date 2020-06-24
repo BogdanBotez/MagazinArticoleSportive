@@ -59,8 +59,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
             questionTitle.setText("Set an answer for the next security question");
             verifyBtn.setText("Set");
 
-            //displayAnswer();
-
             verifyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,9 +87,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        String phoneDB = dataSnapshot.child("phone").getValue().toString();
-
-
                         String answerDB = dataSnapshot.child("answer").getValue().toString();
 
                         if (!answer.equals(answerDB)) {

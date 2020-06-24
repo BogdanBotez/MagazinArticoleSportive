@@ -85,7 +85,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     private void applyCoupon() {
 
-        //Todo salveaza cupoanele intr-o lista dupa care treci prin toate si verifica daca exista
         couponsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

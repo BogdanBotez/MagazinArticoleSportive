@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magazinarticolesportive.HomeActivity;
-import com.example.magazinarticolesportive.models.Wish;
+import com.example.magazinarticolesportive.models.Products;
 import com.example.magazinarticolesportive.prevalent.Prevalent;
 import com.example.magazinarticolesportive.ProductDetailsActivity;
 import com.example.magazinarticolesportive.R;
@@ -67,20 +67,19 @@ public class WishListActivity extends AppCompatActivity {
 
         final DatabaseReference wishListRef = FirebaseDatabase.getInstance().getReference().child("Wish List");
 
-        FirebaseRecyclerOptions<Wish> options =
-                new FirebaseRecyclerOptions.Builder<Wish>()
+        FirebaseRecyclerOptions<Products> options =
+                new FirebaseRecyclerOptions.Builder<Products>()
                         .setQuery(wishListRef
                                 .child(Prevalent.currentUser.getPhone())
-                                .child("Products"), Wish.class).build();
-        FirebaseRecyclerAdapter<Wish, WishViewHolder> adapter = new FirebaseRecyclerAdapter<Wish, WishViewHolder>(options) {
+                                .child("Products"), Products.class).build();
+        FirebaseRecyclerAdapter<Products, WishViewHolder> adapter = new FirebaseRecyclerAdapter<Products, WishViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull WishViewHolder holder, int position, final Wish model) {
+            protected void onBindViewHolder(@NonNull WishViewHolder holder, int position, final Products model) {
                 holder.txtCategory.setText("Category: " + model.getCategory());
                 holder.txtName.setText(model.getName());
                 holder.txtPrice.setText("Price = " + model.getPrice());
                 holder.txtSport.setText("Sport: " + model.getSport());
 
-                //Cand se apasa pe un produs
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -95,11 +94,11 @@ public class WishListActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int option) {
                                 if (option == 0) {
                                     Intent intent = new Intent(WishListActivity.this, ProductDetailsActivity.class);
-                                    intent.putExtra("pid", model.getPId());
+                                    intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
                                 } else if (option == 1) {
                                     wishListRef.child(Prevalent.currentUser.getPhone()).child("Products")
-                                            .child(model.getPId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            .child(model.getPid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
