@@ -1,4 +1,4 @@
-package com.example.magazinarticolesportive.User;
+package com.example.magazinarticolesportive.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,11 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.magazinarticolesportive.HomeActivity;
+import com.example.magazinarticolesportive.R;
 import com.example.magazinarticolesportive.models.Coupons;
 import com.example.magazinarticolesportive.models.Products;
 import com.example.magazinarticolesportive.prevalent.Prevalent;
-import com.example.magazinarticolesportive.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -178,6 +177,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     }else {
                         addCoupon(Double.parseDouble(totalPrice));
                     }
+                    Intent intent = new Intent(ConfirmOrderActivity.this, HomeActivity.class);
                     Toast.makeText(ConfirmOrderActivity.this, "You have confirmed the order!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ConfirmOrderActivity.this, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
